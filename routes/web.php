@@ -26,25 +26,112 @@ Route::resource('user-management', 'UserManagementController');
 
 Route::resource('employee-management', 'EmployeeManagementController');
 Route::post('employee-management/search', 'EmployeeManagementController@search')->name('employee-management.search');
-
-Route::resource('system-management/department', 'DepartmentController');
-Route::post('system-management/department/search', 'DepartmentController@search')->name('department.search');
-
-Route::resource('system-management/division', 'DivisionController');
-Route::post('system-management/division/search', 'DivisionController@search')->name('division.search');
-
-Route::resource('system-management/country', 'CountryController');
-Route::post('system-management/country/search', 'CountryController@search')->name('country.search');
-
-Route::resource('system-management/state', 'StateController');
-Route::post('system-management/state/search', 'StateController@search')->name('state.search');
-
-Route::resource('system-management/city', 'CityController');
-Route::post('system-management/city/search', 'CityController@search')->name('city.search');
-
-Route::get('system-management/report', 'ReportController@index');
-Route::post('system-management/report/search', 'ReportController@search')->name('report.search');
-Route::post('system-management/report/excel', 'ReportController@exportExcel')->name('report.excel');
-Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name('report.pdf');
-
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
+
+Route::get('/vendors', function () {
+
+    return view('admin.vendor');
+})->middleware('auth');
+
+Route::get('/product', function () {
+    return view('admin.product');
+})->middleware('auth');
+
+Route::get('/purchase', function () {
+    return view('admin.purchase');
+})->middleware('auth');
+
+//request odoo
+// Route::get('/get/product',array('middleware' => 'cors', 'uses' => 'OdooController@getProduct'));
+Route::get('/get/product','OdooController@getProduct');
+
+Route::get('/get/purchase','OdooController@getPurchase');
+
+Route::get('/get/purchase/product','OdooController@getProductPurchase');
+
+Route::get('/get/purchase/report','OdooController@getPurchaseReport');
+
+Route::get('/get/inventory/valuation','OdooController@getInventoryValuationByProductId');
+
+Route::get('/get/weather','OdooController@getWeather');
+
+
+//VENDOR
+Route::resource('vendor', 'VendorController');
+
+Route::get('/get/vendor','VendorController@index');
+
+Route::post('/update/vendor', 'VendorController@updateVendor');
+
+Route::post('/delete/vendor', 'VendorController@deleteVendor');
+
+
+//PRODUCT VENDOR
+Route::post('/add/product/vendor', 'VendorController@storeProductVendor');
+
+Route::post('/get/product/vendor','VendorController@getVendorProduct');
+
+Route::post('/delete/product/vendor', 'VendorController@deleteVendorProduct');
+
+Route::post('/update/product/vendor', 'VendorController@updateVendorProduct');
+
+Route::get('/edit/vendor/product', function() {
+    return View::make('admin.vendorProduct');
+})->middleware('auth');
+
+
+//PRODUCT
+Route::resource('productModel', 'ProductController');
+
+Route::post('/update/product', 'ProductController@updateProduct');
+
+Route::post('/delete/product', 'ProductController@deleteProduct');
+
+Route::get('/choose/product', function() {
+    return View::make('admin.chooseProduct');
+})->middleware('auth');
+
+
+//PURCHASE ORDER
+Route::get('/get/purchase/order', 'PurchaseController@index');
+
+Route::get('/choose/product/purchase', function() {
+    return View::make('admin.chooseProductVendorPurchase');
+})->middleware('auth');
+
+Route::post('/data/product/vendor/purchase', 'PurchaseController@dataProductVendor');
+
+Route::get('/data/product/vendor/purchase', 'PurchaseController@getDataProductPurchase');
+
+Route::post('/data/cart/purchase', 'PurchaseController@store');
+
+Route::get('/cart/product/purchase', function() {
+    return View::make('admin.purchaseCart');
+})->middleware('auth');
+
+//INVENTORY
+Route::get('/inventory/comodity', function () {
+    return View::make('admin.inventoryProduct');
+})->middleware('auth');
+
+Route::get('/inventory/comodity/item', function () {
+    return View::make('admin.inventoryProductChoose');
+})->middleware('auth');
+
+Route::post('/inventory/comodity/item', 'InventoryController@dataProductByItem');
+
+Route::get('/get/inventory/comodity/item', 'InventoryController@getDataProductByItem');
+
+Route::post('/inventory/process/item', 'InventoryController@dataVendorProductByItem');
+
+Route::get('/get/inventory/process/item', 'InventoryController@getDataVendorProductByItem');
+
+Route::post('/update/inventory/process', 'InventoryController@updateProductInventoryProcess');
+
+Route::post('/update/inventory/result', 'InventoryController@updateProductInventoryResult');
+
+Route::get('/inventory/stock', function () {
+    return View::make('admin.inventoryStockProduct');
+})->middleware('auth');
+
+Route::get('/get/inventory/stock', 'InventoryController@getDataStockComodityInventory');

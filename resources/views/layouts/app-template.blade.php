@@ -7,9 +7,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EM | Empployee Management</title>
+   
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>CATATANI</title>
     <!-- Bootstrap 3.3.6 -->
     <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome -->
@@ -27,6 +30,18 @@
       -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
+
+    <!-- datatables -->
+    <link rel="stylesheet" href="{{ asset('datatables-plugins/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datatables-responsive/dataTables.responsive.css') }}">
+    
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -107,6 +122,22 @@
           format: 'yyyy/mm/dd'
         });
     });
+
 </script>
+
+    <script src="{{ asset("js/highcharts.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("js/odoo.js") }}" type="text/javascript"></script>
+
+    <!-- overlay loading -->
+    <script src="{{ asset("js/loadingoverlay.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("js/loadingoverlay_progress.min.js") }}" type="text/javascript"></script>
+
+    <!-- datatable js -->
+    <script src="{{ asset("datatables/js/jquery.dataTables.min.js") }}"></script>
+    <script src="{{ asset("datatables-plugins/dataTables.bootstrap.min.js") }}"></script>
+    <script src="{{ asset("datatables-responsive/dataTables.responsive.js") }}"></script>
+    <!-- <script src="{{ asset("datatables/js/dataTables.editor.js") }}"></script> -->
+    <script src="{{ asset("datatables/js/dataTables.keyTable.min.js") }}"></script>
+
   </body>
 </html>

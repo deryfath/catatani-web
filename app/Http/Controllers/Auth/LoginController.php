@@ -33,8 +33,8 @@ class LoginController extends Controller
      * @return bool
      */
     protected function hasTooManyLoginAttempts ($request) {
-        $maxLoginAttempts = 2;
-        $lockoutTime = 5; // 5 minutes
+        $maxLoginAttempts = 5;
+        $lockoutTime = 60; // 5 minutes
         return $this->limiter()->tooManyAttempts(
             $this->throttleKey($request), $maxLoginAttempts, $lockoutTime
         );
