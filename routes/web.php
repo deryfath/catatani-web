@@ -56,6 +56,10 @@ Route::get('/get/inventory/valuation','OdooController@getInventoryValuationByPro
 Route::get('/get/weather','OdooController@getWeather');
 
 
+//DASHBOARD
+Route::get('/get/dashboard/count', 'DashboardController@getDashboardCount');
+
+
 //VENDOR
 Route::resource('vendor', 'VendorController');
 

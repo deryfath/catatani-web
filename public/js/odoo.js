@@ -1,7 +1,9 @@
 
 console.log(window.location.pathname);
 
-if(window.location.pathname == "/charts" || window.location.pathname == "/" || window.location.pathname == "/admin"){
+if(window.location.pathname== "/" ){
+
+	getDashboardCount();
 	// getProduct();
 	// getPurchaseProduct();
 	// getPurchaseReport();
@@ -793,8 +795,8 @@ function chooseVendorProduct(){
                                                 
                                                 '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
                                                     
-                                                    '<label class="btn btn-default" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;">'+
-
+                                                	'<label class="btn btn-default product-vendor-label" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;">'+
+                                              
                                                        '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
                                              
                                                          '<div class="bizcontent">'+
@@ -803,10 +805,12 @@ function chooseVendorProduct(){
                                                             '<input type="checkbox" id="checkbox_'+result.data[i].id+'" class="vendor-product-checkbox" data-id="'+result.data[i].id+'" style="display:none;" >'+
                                                             
                                                         '</div>'+
+                                                
                                                     '</label>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>';
+
 
                 $('#product_vendor_container').append(productVendorHtml);
 			}
@@ -1516,11 +1520,37 @@ function getInventoryComodity(){
 			            '</div>'+
         			'</div>'
 
+        	var productInventoryHtml = "";
+
 			if(result.data.length==0){
 				$('#product_inventory_container').html(htmlEmptyProductInventory);
 			}else{
 				for (var i = 0; i < result.data.length; i++) {
-				var productInventoryHtml =  '<div class="items col-sm-2 item-product-vendor" data-id="'+result.data[i].id+'">'+
+
+				    if (result.data[i].qty_available==0) {
+
+				    	productInventoryHtml =  '<div class="items col-sm-2 item-product-vendor" data-id="'+result.data[i].id+'">'+
+                                            '<div class="info-block block-info clearfix">'+
+                                                
+                                                '<div data-toggle="buttons" id="'+result.data[i].id+'" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" class="btn-group bizmoduleselect vendor-inventory-btn">'+
+                                                    
+                                                    '<label class="btn btn-default" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;background-color:darkred;">'+
+
+                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
+                                             
+                                                         '<div class="bizcontent">'+
+                                                            '<h5 style="font-weight:bold;color: white;">'+result.data[i].name+'</h5>'+
+                                                            '<h5 style="color: white;">'+result.data[i].x_kategori_produk+'</h5>'+
+                                                            
+                                                        '</div>'+
+                                                    '</label>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>';
+		            	
+	                }else{
+
+	                	productInventoryHtml =  '<div class="items col-sm-2 item-product-vendor" data-id="'+result.data[i].id+'">'+
                                             '<div class="info-block block-info clearfix">'+
                                                 
                                                 '<div data-toggle="buttons" id="'+result.data[i].id+'" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" class="btn-group bizmoduleselect vendor-inventory-btn">'+
@@ -1538,6 +1568,10 @@ function getInventoryComodity(){
                                                 '</div>'+
                                             '</div>'+
                                         '</div>';
+
+	                }
+
+				
 
                  $('#product_inventory_container').append(productInventoryHtml);
 			   }
@@ -1854,6 +1888,152 @@ function getDataStockInventory(){
 //////////////////////////////////////////////////////DASHBOARD/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+function getDashboardCount(){
+
+	$.ajax({
+		type:'GET',
+		url:'/get/dashboard/count',
+		// async: true,
+
+		success:function(data){
+
+			console.log(data);
+
+			//COUNT DASHBOARD
+			$('#purchase_order_count').each(function () {
+			    $(this).prop('Counter',0).animate({
+			        Counter: data.data[0]
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(Math.ceil(now));
+			        }
+			    });
+			});
+
+			$('#product_count').each(function () {
+			    $(this).prop('Counter',0).animate({
+			        Counter: data.data[1]
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(Math.ceil(now));
+			        }
+			    });
+			});
+
+			$('#vendor_count').each(function () {
+			    $(this).prop('Counter',0).animate({
+			        Counter: data.data[2]
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(Math.ceil(now));
+			        }
+			    });
+			});
+
+
+			$('#purchase_order_transaction_total').text(comma_digits(data.data[5]));
+			$('#total_komoditas_transaction_total').text(comma_digits(data.data[3]));
+
+
+			//CHART STOCK
+
+			var pdata = [];
+			var pAttribute =[];
+			var emptyStock = 0;
+
+			for (var i = 0; i < data.data[4].length; i++) {
+
+				pAttribute.push(data.data[4][i].name,data.data[4][i].qty_available);
+
+				pdata.push(pAttribute);
+
+				pAttribute = [];
+
+				if(data.data[4][i].qty_available==0){
+					emptyStock++;
+				}
+			}
+
+			$('#comodity_count').each(function () {
+			    $(this).prop('Counter',0).animate({
+			        Counter: emptyStock
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(Math.ceil(now));
+			        }
+			    });
+			});
+
+			console.log(pdata);
+
+			Highcharts.chart('product_stock_chart', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: ''
+				    },
+				    xAxis: {
+				        type: 'category',
+				        labels: {
+				            rotation: -45,
+				            style: {
+				                fontSize: '13px',
+				                fontFamily: 'Verdana, sans-serif'
+				            }
+				        }
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Jumlah (Kg)'
+				        }
+				    },
+				    legend: {
+				        enabled: false
+				    },
+				    tooltip: {
+				        pointFormat: 'Komoditas: <b>{point.y:.1f} Kg</b>'
+				    },
+				    series: [{
+				        name: 'Komoditas',
+				        data: pdata,
+				        dataLabels: {
+				            enabled: true,
+				            rotation: -90,
+				            color: '#FFFFFF',
+				            align: 'right',
+				            format: '{point.y:.1f}', // one decimal
+				            y: 10, // 10 pixels down from the top
+				            style: {
+				                fontSize: '13px',
+				                fontFamily: 'Verdana, sans-serif'
+				            }
+				        }
+				    }]
+				});
+
+
+		}
+	})
+
+}
+
+function comma_digits(text_number){ 
+    if(typeof text_number == 'number'){
+        text_number = text_number.toString();
+    }    
+    return  text_number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); 
+}
+
 function getPurchaseReport(){
 	$.ajax({
 		type:'GET',
@@ -2056,70 +2236,4 @@ function getPurchaseProduct(){
 
        }
      })
-}
-
- function getProduct(){
-    $.ajax({
-       type:'GET',
-       url:'/get/product',
-       // async: true,
-       success:function(data){
-
-			console.log(data);
-
-			var result = data;
-			var pdata = [];
-			var quantityVar = []; 
-
-			for (var i = 0; i < result.data.length; i++) {
-
-				quantityVar.push(result.data[i].qty_available);
-
-				pdata.push({
-			        name: result.data[i].name,
-					data: quantityVar
-
-				})
-
-				quantityVar = [];
-			}
-
-			Highcharts.chart('cbar', {
-		        chart: {
-		            plotBackgroundColor: null,
-		            plotBorderWidth: null,
-		            plotShadow: false,
-		            type: 'column'
-		        },
-		        title: {
-		            text: 'Product Stock Availability'
-		        },
-		     	xAxis: {
-				    categories: ['product'],
-				    crosshair: true
-				    },
-				    yAxis: {
-				        min: 0,
-				        title: {
-				            text: 'Quantity (kg)'
-				        }
-				    },
-				    tooltip: {
-				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				        pointFormat: '<tr><td >{series.name}: </td>' +
-				            '<td style="padding:0"><b>{point.y:.1f} Kg</b></td></tr>',
-				        footerFormat: '</table>',
-				        shared: true,
-				        useHTML: true
-				    },
-				    plotOptions: {
-				        column: {
-				            pointPadding: 0.2,
-				            borderWidth: 0
-				        }
-				    },
-				    series: pdata
-		    });
-       }
-    });
 }
