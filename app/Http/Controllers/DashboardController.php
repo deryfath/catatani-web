@@ -82,7 +82,12 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getDashboardCount()
-    {
+    {   
+
+        $logger = new Logger('dashboard_count');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
 
         $varCount = array();
@@ -100,6 +105,8 @@ class DashboardController extends Controller
         for ($j=0; $j < count($dataPurchase); $j++) { 
             $amountTotalPurchase = $amountTotalPurchase + $dataPurchase[$j]['amount_total'];
         }
+
+        $logger->info('ARR amount '.$amountTotalPurchase);
 
         array_push($varCount, count($dataPurchase),count($dataProduct),count($dataVendor),$countTotalComodity,$dataProduct,$amountTotalPurchase);
         return response()->json(array('data'=> $varCount), 200);
