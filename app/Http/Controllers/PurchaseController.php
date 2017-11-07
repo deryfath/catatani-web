@@ -206,5 +206,34 @@ class PurchaseController extends Controller
 
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateComodityPricePurchase(Request $request){
+
+        $logger = new Logger('update_vendor_product');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        $id = $request->input('id');
+        $price = $request->input('price');
+
+
+        $logger->info('PRICE '.$price);
+        
+        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+        $response = $models->execute_kw($this->db, $this->uid, $this->password, 'product.supplierinfo', 'write',array(array($id), array('price'=>$price)));
+        // $response2 = $models->execute_kw($this->db, $this->uid, $this->password, 'res.partner', 'name_get',array(array($id)));
+        
+
+
+        $request->session()->flash('status', 'Vendor Product Updated!');
+
+        return response()->json(array('data'=> $response), 200);
+    }
+
 
 }

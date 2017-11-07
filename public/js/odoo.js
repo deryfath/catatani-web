@@ -147,7 +147,7 @@ function getProductList(){
 					                '<div class="panel panel-default">'+
 					    
 					            '<div class="panel-body" style="height: 30vh;padding-top: 10vh;">'+
-					            '<div class="text-center"><h4><b>Empty Product</b></h4></div>'+
+					            '<div class="text-center"><h4><b>Komoditas Kosong</b></h4></div>'+
 					        '</div>'+
 					    
 					    '</div>'+
@@ -565,7 +565,7 @@ function editVendorProduct(){
 					                '<div class="panel panel-default">'+
 					    
 					            '<div class="panel-body" style="height: 30vh;padding-top: 10vh;">'+
-					            '<div class="text-center"><h4><b>Empty Vendor Product</b></h4></div>'+
+					            '<div class="text-center"><h4><b>Komoditas Kosong</b></h4></div>'+
 					        '</div>'+
 					    
 					    '</div>'+
@@ -1042,7 +1042,7 @@ function getVendorPurchase(){
 
        		$('#vendor_purchase').on('change', function() {
 			    console.log( this.value );
-
+			    
 			    $.LoadingOverlay("show");
 
 			 	getProductVendorPurchase(this.value);
@@ -1087,7 +1087,7 @@ function getProductVendorPurchase(id){
 					                '<div class="panel panel-default">'+
 					    
 					            '<div class="panel-body" style="height: 30vh;padding-top: 10vh;">'+
-					            '<div class="text-center"><h4><b>Empty Product</b></h4></div>'+
+					            '<div class="text-center"><h4><b>Komoditas Kosong</b></h4></div>'+
 					        '</div>'+
 					    
 					    '</div>'+
@@ -1111,7 +1111,7 @@ function getProductVendorPurchase(id){
 			                                                     '<div class="bizcontent">'+
 			                                                        '<h5 style="font-weight:bold;">'+result.data[i].product_detail[0].name+'</h5>'+
 			                                                        '<h5>'+result.data[i].product_detail[0].x_kategori_produk+'</h5>'+
-			                                                        '<input type="checkbox" id="checkbox_product_purchase_'+result.data[i].product_detail[0].id+'" class="vendor-product-purchase-checkbox" data-vendorname="'+result.data[i].name+'" data-id="'+result.data[i].product_detail[0].id+'" data-partner="'+result.data[i].id+'" data-name="'+result.data[i].product_detail[0].name+'" data-image="'+result.data[i].product_detail[0].image_medium+'" data-price="'+result.data[i].price+'" style="display:none;" >'+
+			                                                        '<input type="checkbox" id="checkbox_product_purchase_'+result.data[i].product_detail[0].id+'" class="vendor-product-purchase-checkbox" data-vendorname="'+result.data[i].name+'" data-supplierid="'+result.data[i].id+'" data-id="'+result.data[i].product_detail[0].id+'" data-partner="'+result.data[i].id+'" data-name="'+result.data[i].product_detail[0].name+'" data-image="'+result.data[i].product_detail[0].image_medium+'" data-price="'+result.data[i].price+'" style="display:none;" >'+
 			                                                        
 			                                                    '</div>'+
 			                                                '</label>'+
@@ -1128,6 +1128,7 @@ function getProductVendorPurchase(id){
 				$('.vendor-product-purchase-checkbox').change(function() {
 			 	var productId = $(this).data('id');
 			 	var partnerId = $(this).data('partner');
+			 	var supplierId = $(this).data('supplierid');
 			 	var partnerName = $(this).data('vendorname');
 			 	var name = $(this).data('name');
 			 	var image = $(this).data('image');
@@ -1145,7 +1146,7 @@ function getProductVendorPurchase(id){
 				      $(stars[i]).removeClass('selected');
 				    }
 
-		            ratingStarEvent();
+		            // ratingStarEvent();
 
 		            
 		            document.getElementById("product_vendor_purchase_price").value = price;
@@ -1154,7 +1155,8 @@ function getProductVendorPurchase(id){
 
 		            $('#submitProductVendorPurchase').unbind('click').click(function(){
 
-		            	var rating = parseInt($('#stars li.selected').last().data('value'), 10);
+		            	var rating = 0;
+		            	// var rating = parseInt($('#stars li.selected').last().data('value'), 10);
 
 		            	console.log(rating);
 						
@@ -1163,10 +1165,10 @@ function getProductVendorPurchase(id){
 							partner_id:partnerId,
 							product_id:productId,
 							name:name,
-							price:price,
+							price:document.getElementById("product_vendor_purchase_price").value,
 							quantity:qty,
 							vendor_name:partnerName,
-							subtotal:parseInt(qty)*parseInt(price),
+							subtotal:parseInt(qty)*parseInt(document.getElementById("product_vendor_purchase_price").value),
 							quality:rating
 						})
 
@@ -1176,6 +1178,25 @@ function getProductVendorPurchase(id){
 					          	
 						$('#submitProductVendorPurchase').removeAttr('disabled');
 
+						//update price comodity
+
+						var dataSend = {
+							id : supplierId,
+							price : document.getElementById("product_vendor_purchase_price").value
+						}
+						$.ajax({
+					          type: "POST",
+					          url: "/update/purchase/comodity/price",
+					          headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+					          // The key needs to match your method's input parameter (case-sensitive).
+					          data: JSON.stringify(dataSend),
+					          contentType: "application/json; charset=utf-8",
+					          dataType: "json",
+					          success: function(data){
+
+					          	 console.log(data);
+					          }
+					    })
 
 					})
 
@@ -1209,7 +1230,22 @@ function getProductVendorPurchase(id){
 
 		    });
 
- 			$('#nextProductVendorPurchase').click(function(){
+			$('.add-comodity-purchase').unbind('click').click(function(){
+				console.log('test');
+				var VName = $("#vendor_purchase option:selected").text();
+				var Vid = $("#vendor_purchase option:selected").val();
+				console.log(VName);
+				console.log(Vid);
+				window.location.href="/edit/vendor/product?vendor_id="+Vid+"&vendor_name="+VName;
+			})
+
+			$('.add-vendor-purchase').unbind('click').click(function(){
+
+				window.location.href="/vendors";
+
+			})
+
+ 			$('#nextProductVendorPurchase').unbind('click').click(function(){
  				console.log(arrProduct);
 
 	        	//post data arrProduct
@@ -1512,7 +1548,7 @@ function getInventoryComodity(){
 					                '<div class="panel panel-default">'+
 					    
 					            '<div class="panel-body" style="height: 30vh;padding-top: 10vh;">'+
-					            '<div class="text-center"><h4><b>Empty Product</b></h4></div>'+
+					            '<div class="text-center"><h4><b>Komoditas Kosong</b></h4></div>'+
 					        '</div>'+
 					    
 					    '</div>'+

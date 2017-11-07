@@ -113,6 +113,8 @@ Route::get('/cart/product/purchase', function() {
     return View::make('admin.purchaseCart');
 })->middleware('auth');
 
+Route::post('/update/purchase/comodity/price', 'PurchaseController@updateComodityPricePurchase');
+
 //INVENTORY
 Route::get('/inventory/comodity', function () {
     return View::make('admin.inventoryProduct');

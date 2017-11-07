@@ -26,6 +26,12 @@
               <div class="box-body">
                  <div class="row">
                     <div class="col-sm-12">
+                      <div class="panel-body">
+                        
+                            <button class="btn btn-primary add-comodity-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas</button>
+                            <button class="btn btn-primary add-vendor-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Petani</button>
+                   
+                        </div>
                        <div class="panel-body">
                             
                             <div class="row">
@@ -78,15 +84,14 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="name">Harga (/Kg)</label>
-                        <input type="text" id="product_vendor_purchase_price" class="form-control" readonly>
+                        <input type="text" id="product_vendor_purchase_price" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="address">Kuantitas (Kg) </label>
                         <input class="form-control" type="number" id="product_vendor_purchase_quantity" value="0" />
                     </div>
-                    <div class="form-group" style="text-align: center;">
+                    <!-- <div class="form-group" style="text-align: center;">
                         <label for="address">Rating</label>
-                         <!-- Rating Stars Box -->
                           <div class='rating-stars text-center'>
                             <ul id='stars'>
                               <li class='star' title='Poor' data-value='1'>
@@ -106,7 +111,7 @@
                               </li>
                             </ul>
                           </div>
-                    </div>
+                    </div> -->
                 </form>
           </div>
 

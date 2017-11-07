@@ -29,7 +29,7 @@
                     <div class="col-sm-12"> 
                         
                         <div class="panel-body">
-                            <a href="#createVendorModal" data-toggle="modal" class="btn btn-primary add-vendor"><i class="glyphicon glyphicon-plus"></i> Add New</a>
+                            <a href="#createVendorModal" data-toggle="modal" class="btn btn-primary add-vendor"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</a>
                    
                         </div>
 

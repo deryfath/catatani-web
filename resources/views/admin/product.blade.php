@@ -26,7 +26,7 @@
                  <div class="row">
                     <div class="col-sm-12">
                         <div class="panel-body">
-                             <a href="#createProductModal" data-toggle="modal" class="btn btn-primary add-Product"><i class="glyphicon glyphicon-plus"></i> Add New</a>
+                             <a href="#createProductModal" data-toggle="modal" class="btn btn-primary add-Product"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</a>
                         </div>
                         @if (session('status'))
                             <div class="alert alert-success  alert-dismissable" style="margin: 0px 14px;" role="alert">
