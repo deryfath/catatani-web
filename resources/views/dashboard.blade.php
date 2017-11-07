@@ -19,21 +19,7 @@
 
       <!-- Your Page Content Here -->
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3 id="purchase_order_count">0</h3>
-
-              <p>Transaksi Pembelian</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-cart-arrow-down"></i>
-            </div>
-            <a href="{{ url('purchase') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+      <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
@@ -48,6 +34,7 @@
             <a href="{{ url('product') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -63,6 +50,23 @@
             <a href="{{ url('vendors') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3 id="purchase_order_count">0</h3>
+
+              <p>Transaksi Pembelian</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cart-arrow-down"></i>
+            </div>
+            <a href="{{ url('purchase') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        
+        
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
