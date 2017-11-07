@@ -82,15 +82,14 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="name">Harga (/Kg)</label>
-                        <input type="text" id="cart_purchase_price" class="form-control" readonly>
+                        <input type="text" id="cart_purchase_price" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="address">Kuantitas (Kg) </label>
                         <input class="form-control" type="number" id="cart_purchase_quantity" />
                     </div>
-                    <div class="form-group" style="text-align: center;">
+                    <!-- <div class="form-group" style="text-align: center;">
                         <label for="address">Rating</label>
-                         <!-- Rating Stars Box -->
                           <div class='rating-stars text-center'>
                             <ul id='stars'>
                               <li class='star' title='Poor' data-value='1'>
@@ -110,7 +109,7 @@
                               </li>
                             </ul>
                           </div>
-                    </div>
+                    </div> -->
                 </form>
           </div>
 

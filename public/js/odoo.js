@@ -1355,14 +1355,14 @@ function getDataProductVendorPurchase () {
 		    document.getElementById('cart_purchase_quantity').value = table.row( row ).data().quantity;
 
 		    //RATING
-            var ratingVal = table.row( row ).data().quality;
-            var stars = $('#stars li').parent().children('li.star');
+      //       var ratingVal = table.row( row ).data().quality;
+      //       var stars = $('#stars li').parent().children('li.star');
 
-            for (i = 0; i < ratingVal; i++) {
-		      $(stars[i]).addClass('selected');
-		    }
+      //       for (i = 0; i < ratingVal; i++) {
+		    //   $(stars[i]).addClass('selected');
+		    // }
 
-	        ratingStarEvent();
+	        // ratingStarEvent();
 
 		    $('#submitCartPurchase').unbind('click').click(function(){
 		    	
@@ -1370,12 +1370,16 @@ function getDataProductVendorPurchase () {
 
 		    	$('.modal-backdrop').remove();
 
-		    	var qual = parseInt($('#stars li.selected').last().data('value'), 10);
+		    	var qual = 0;
+		    	// var qual = parseInt($('#stars li.selected').last().data('value'), 10);
 		    	table.cell(idxRow,1).data(qual);
+
+		    	//price
+		    	table.cell(idxRow,2).data(document.getElementById('cart_purchase_price').value);
 
 		    	var qty = document.getElementById('cart_purchase_quantity').value;
 		    	table.cell(idxRow,3).data(qty);
-		    	var subtotal = parseInt(qty) * parseInt(table.row( row ).data().price); 
+		    	var subtotal = parseInt(qty) * parseInt(document.getElementById('cart_purchase_price').value); 
 		    	table.cell(idxRow,4).data(subtotal);
 
 		    	var totalAccumulative = 0;
