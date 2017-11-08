@@ -5,9 +5,9 @@
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
+          <h1><b>
             Review Pembelian
-          </h1>
+          </b></h1>
           <ol class="breadcrumb">
             <!-- li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li-->
             <!-- <li class="active">User Mangement</li> -->
@@ -27,7 +27,9 @@
               <div class="box-body">
                  <div class="row">
                     <div class="col-sm-12">
-                        
+                         <div class="panel-body">
+                                <button class="btn btn-success" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchase"><i class="glyphicon glyphicon-saved"></i> Konfirmasi</button>
+                            </div>  
                         <div class="panel-body">
                             <table class="table table-striped table-hover" id="dataTables-cart-purchase">
                                 <thead>
@@ -52,13 +54,7 @@
                                 </tfoot>
                             </table>
                             
-                            <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align:right;margin-top:10px;">
-                                            <button class="btn btn-primary" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchase">Konfirmasi</button>
-                                        </div>
-                                    </div>
-                            </div>  
+                           
                         </div>
 
                     </div>

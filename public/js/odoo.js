@@ -1044,6 +1044,7 @@ function getVendorPurchase(){
 			    console.log( this.value );
 			    
 			    $.LoadingOverlay("show");
+			    document.getElementById("badge_purchase_cart").innerHTML = 0;
 
 			 	getProductVendorPurchase(this.value);
 
@@ -1198,7 +1199,17 @@ function getProductVendorPurchase(id){
 					          }
 					    })
 
+						document.getElementById("badge_purchase_cart").innerHTML=  arrProduct.length;
+
+						$.LoadingOverlay("show");
+						$.LoadingOverlay("hide");
+
+						$("#chooseProductVendorSuccessAdd").modal();
+					    
 					})
+
+
+					
 
 		 			$('#cancelProductVendorPurchase').unbind('click').click(function(){
 		 				
@@ -1257,11 +1268,11 @@ function getProductVendorPurchase(id){
 
 
 			    if(arrProduct.length==0){
-			    	
+
 			    	$.LoadingOverlay("hide");
 
 			    	$("#chooseProductVendorFailed").modal();
-			    	
+
 			    	$('#nextProductVendorPurchase').removeAttr('disabled');
 
 			    }else{
@@ -1350,6 +1361,14 @@ function getDataProductVendorPurchase () {
 
 			console.log('test');
 			table.row( $(this).parents('tr') ).remove().draw();
+
+			var totalAccumulative = 0;
+
+	    	for(var k=0; k<table.rows().data().length; k++){
+	    		totalAccumulative = totalAccumulative + table.row(k).data().subtotal;
+	    	}
+
+	    	$('#total_cart_purchase').text(totalAccumulative);
 
 		})
 

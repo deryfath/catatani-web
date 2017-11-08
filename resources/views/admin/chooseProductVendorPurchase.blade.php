@@ -5,9 +5,9 @@
      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
+          <h1><b>
             Pilih Komoditas Vendor
-          </h1>
+          </b></h1>
           <ol class="breadcrumb">
             <!-- li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li-->
             <!-- <li class="active">User Mangement</li> -->
@@ -30,14 +30,21 @@
                         
                             <button class="btn btn-primary add-comodity-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas</button>
                             <button class="btn btn-primary add-vendor-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Petani</button>
-                            <button class="btn btn-success pull-right" onclick="this.disabled=true;this.value='Sending, please wait...';" id="nextProductVendorPurchase"><i class="glyphicon glyphicon-arrow-right"></i> Selanjutnya</button>
+                            <div class="cart-purchase pull-right">
+                                 <div class="item" style=" position:relative;display:inline-block;">
+                                        <a href="#"><span class="notify-badge" id="badge_purchase_cart" style="position: absolute;right:-14px;top:-12px;background:red;text-align: center;border-radius: 30px 30px 30px 30px;color:white;padding:5px 10px;font-size:12px;">0</span>
+                                          <button class="btn btn-success pull-right" onclick="this.disabled=true;this.value='Sending, please wait...';" id="nextProductVendorPurchase"><i class="glyphicon glyphicon-shopping-cart" style="font-size:20px;"></i></button>
+                                      </a>
+                                </div>
+                            </div>
+                            
                         </div>
                        <div class="panel-body">
                             
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <label for="vendor_purchase">Petani</label>
+                                        <label for="vendor_purchase">Pilih Petani</label>
                                         <select id="vendor_purchase" class="form-control" style="width: 24%;">
                                           
                                         </select>
@@ -120,7 +127,27 @@
       </div>
     </div>
 
-     <div id="chooseProductVendorFailed" class="modal fade" role="dialog">
+     <div id="chooseProductVendorSuccessAdd" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><b>Notifikasi</b></h4>
+          </div>
+          <div class="modal-body" >
+            Komoditas Berhasil Ditambahkan ke keranjang
+          </div>
+
+          <div class="modal-footer">
+                <button  id="cancelProductVendor" class="btn btn-default" data-dismiss="modal">OK</button>
+          </div>
+         
+        </div>
+
+      </div>
+    </div>
+
+    <div id="chooseProductVendorFailed" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
         <div class="modal-content">
