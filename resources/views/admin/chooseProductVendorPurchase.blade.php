@@ -30,7 +30,7 @@
                         
                             <button class="btn btn-primary add-comodity-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas</button>
                             <button class="btn btn-primary add-vendor-purchase"><i class="glyphicon glyphicon-plus"></i> Tambah Petani</button>
-                   
+                            <button class="btn btn-success pull-right" onclick="this.disabled=true;this.value='Sending, please wait...';" id="nextProductVendorPurchase"><i class="glyphicon glyphicon-arrow-right"></i> Selanjutnya</button>
                         </div>
                        <div class="panel-body">
                             
@@ -44,7 +44,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        
+
                             <div class="row">
                                 <div class="form-group">
                                     <div class="searchable-container" id="product_vendor_purchase">
@@ -54,13 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align:right;margin-top:10px;">
-                                            <button class="btn btn-primary" onclick="this.disabled=true;this.value='Sending, please wait...';" id="nextProductVendorPurchase">Next</button>
-                                        </div>
-                                    </div>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -116,8 +111,8 @@
           </div>
 
           <div class="modal-footer">
-               <button type="submit" onclick="this.disabled=true;this.value='Sending, please wait...';" id="submitProductVendorPurchase" class="btn btn-primary submit_product_vendor" >submit</button>
-                <button  id="cancelProductVendorPurchase" class="btn btn-default" data-dismiss="modal">Close</button>
+               <button type="submit" onclick="this.disabled=true;this.value='Sending, please wait...';" id="submitProductVendorPurchase" class="btn btn-primary submit_product_vendor" >Beli</button>
+                <button  id="cancelProductVendorPurchase" class="btn btn-default" data-dismiss="modal">Batal</button>
           </div>
          
         </div>
@@ -125,15 +120,15 @@
       </div>
     </div>
 
-     <div id="productVendorModalSuccess" class="modal fade" role="dialog">
+     <div id="chooseProductVendorFailed" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Product Vendor</h4>
+            <h4 class="modal-title"><b>Notifikasi</b></h4>
           </div>
-          <div class="modal-body" id="body_success">
-
+          <div class="modal-body" >
+            Harap pilih komoditas yang akan dibeli untuk melanjutkan.
           </div>
 
           <div class="modal-footer">
@@ -145,24 +140,6 @@
       </div>
     </div>
 
-    <div id="productVendorModalFailed" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Product Vendor</h4>
-          </div>
-          <div class="modal-body body-failed" id="body_failed">
-
-          </div>
-
-          <div class="modal-footer">
-                <button  id="cancelProductVendor" class="btn btn-default" data-dismiss="modal">OK</button>
-          </div>
-         
-        </div>
-
-      </div>
-    </div>
+    
 
 @endsection

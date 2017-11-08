@@ -33,7 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
-                                        <th>Kualitas</th>
+                                        <!-- <th>Kualitas</th> -->
                                         <th>Harga</th>
                                         <th>Kuantitas</th>
                                         <th>Subtotal</th>
@@ -43,7 +43,7 @@
                                 <tfoot>
                                     <tr>
                                         <th></th>
-                                        <th></th>
+                                        <!-- <th></th> -->
                                         <th></th>
                                         <th>Total</th>
                                         <th id="total_cart_purchase"></th>
