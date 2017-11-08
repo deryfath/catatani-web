@@ -1610,9 +1610,11 @@ function getInventoryComodity(){
                                                     
                                                     '<label class="btn btn-default" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;background-color:darkred;">'+
 
-                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
-                                             
-                                                         '<div class="bizcontent">'+
+                                                       '<img style="width: 100%;position: relative;margin-bottom: -20px;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
+                                             			  
+                                             			  '<div style="background:#000000b8;color:white;position: absolute;width: 100%;">Stok : <span style="font-weight:bold;">'+result.data[i].qty_available+'</span> Kg</div>'+
+
+                                                         '<div class="bizcontent" style="margin-top: 30px;">'+
                                                             '<h5 style="font-weight:bold;color: white;">'+result.data[i].name+'</h5>'+
                                                             '<h5 style="color: white;">'+result.data[i].x_kategori_produk+'</h5>'+
                                                             
@@ -1630,10 +1632,11 @@ function getInventoryComodity(){
                                                 '<div data-toggle="buttons" id="'+result.data[i].id+'" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" class="btn-group bizmoduleselect vendor-inventory-btn">'+
                                                     
                                                     '<label class="btn btn-default" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;">'+
+                                                       '<img style="width: 100%;position: relative;margin-bottom: -20px;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
+                                             			  
+                                             			  '<div style="background:#000000b8;color:white;position: absolute;width: 100%;">Stok : <span style="font-weight:bold;">'+result.data[i].qty_available+'</span> Kg</div>'+
 
-                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
-                                             
-                                                         '<div class="bizcontent">'+
+                                                         '<div class="bizcontent" style="margin-top: 30px;">'+
                                                             '<h5 style="font-weight:bold;">'+result.data[i].name+'</h5>'+
                                                             '<h5>'+result.data[i].x_kategori_produk+'</h5>'+
                                                             
