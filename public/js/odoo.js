@@ -179,12 +179,34 @@ function getProductList(){
 	                                                // '<button class="btn btn-default btn-xs pull-right edit-product" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" data-kategori="'+result.data[i].x_kategori_produk+'" data-plant="'+result.data[i].x_tanggal_awal_tanam+" - "+result.data[i].x_tanggal_akhir_tanam+'" data-harvest="'+result.data[i].x_tanggal_awal_panen+" - "+result.data[i].x_tanggal_akhir_panen+'" data-vendor='+JSON.stringify(arrVendorName)+' data-price='+JSON.stringify(arrVendorPrice)+' role="button"><i class="glyphicon glyphicon-edit"></i>Edit</button>  <button href="#" data-id="'+result.data[i].id+'" data-vendor='+JSON.stringify(arrVendorName)+' class="btn btn-default btn-xs delete-product" role="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>'+
 	                                                '<div class="btn-group">'+
 													  '<button type="button" href="#" data-id="'+result.data[i].id+'" class="btn btn-danger btn-xs delete-product" ><i class="glyphicon glyphicon-trash"></i> Delete</button>'+
-													  '<button type="button" class="btn btn-success btn-xs edit-product" data-id="'+result.data[i].id+'" data-image="'+result.data[i].image_medium+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
+													  '<button type="button" class="btn btn-success btn-xs edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
 													  
 													'</div>'+
 	                                            '</div>'+
 	                                        '</div>'+
 	                                    '</div>';
+
+	                                    // '<div class="items col-sm-2 item-product">'+
+                                     //        '<div class="info-block block-info clearfix">'+
+                                                
+                                     //            '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
+                                                    
+                                     //            	'<label class="btn btn-default product-vendor-label" id="product_label_'+result.data[i].id+'" style="padding: 0;">'+
+                                              		   
+                                     //          		   '<div id="panel_action_comodity"style="display:none;position: absolute;font-size: 20px;background: rgb(56, 86, 107);width:100%;"><i class="glyphicon glyphicon-ok"></i></div>'+
+                                                         
+                                     //                   '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
+                                     //         			 '<div class="bizcontent">'+
+                                     //                        '<h5 style="font-weight:bold;">'+result.data[i].name+'</h5>'+
+                                     //                        '<h5>'+result.data[i].x_kategori_produk+'</h5>'+
+                                     //                        '<input id="card_'+result.data[i].id+'" class="product-item" data-id="'+result.data[i].id+'" style="display:none;" >'+
+                                                            
+                                     //                    '</div>'+
+                                                
+                                     //                '</label>'+
+                                     //            '</div>'+
+                                     //        '</div>'+
+                                     //    '</div>';
 
 	                $('#product_card_row').append(cardHtml);
 	                
@@ -218,6 +240,7 @@ function getProductList(){
 				var id = $(this).data('id');
 				var name = $(this).data('name');
 				var category = $(this).data('category');
+				var imageMedium = $(this).data('imagemedium');
 				var image = $(this).data('image');
 
 				console.log(category);
@@ -237,7 +260,7 @@ function getProductList(){
 				document.getElementById("product_name").value = name;
 
 				//set image
-				document.getElementById("product_image").src="data:image/jpeg;base64,"+image;
+				document.getElementById("product_image").src="data:image/jpeg;base64,"+imageMedium;
 
 				//change image preview
 				document.getElementById("product_file_image").onchange = function () {
@@ -247,14 +270,26 @@ function getProductList(){
 				        // get loaded data and render thumbnail.
 				        document.getElementById("product_image").src = e.target.result;
 				        document.getElementById("product_image").style.width = '23%';
+				        console.log('test');
+
+					    var imgSplit = document.getElementById("product_image").src.split(",/");
+						$('#updateProduct').attr('data-image', "/"+imgSplit[1]);
 				    };
+				    
 
 				    // read the image file as a data URL.
 				    reader.readAsDataURL(this.files[0]);
 				};
 
-				$('#updateProduct').attr('data-id', id);
+				if(document.getElementById("product_file_image").value==""){
+					console.log('test2');
+					$('#updateProduct').attr('data-image', image);
+				}
+					
+				
 
+				$('#updateProduct').attr('data-id', id);
+				
 				$("#updateProductModal").modal();
 
 				// listUpdateProduct = {
@@ -274,11 +309,7 @@ function getProductList(){
 
  			$('#updateProduct').click(function(){
 
- 				console.log('test');
-
- 				var image = document.getElementById("product_image").src.split(",/");
-
- 				console.log(image);
+ 				// console.log($(this).data('image'));
 
  				var category = $('#product_category_update').val();
 
@@ -290,7 +321,7 @@ function getProductList(){
 			         id : $(this).data('id'),
 			         name : document.getElementById("product_name").value,
 			         category : category,
-			         image : "/"+image[1]
+			         image : $(this).data('image')
 			      }
 
 			      console.log(dataSend);
@@ -789,20 +820,68 @@ function chooseVendorProduct(){
 			var productList = JSON.parse(getParameterByName('product'));
 			console.log(productList);
 
+			var productVendorHtml = "";
+			var productResultId = [];
+			var productNotSame = [];
+
 			for (var i = 0; i < result.data.length; i++) {
-				var productVendorHtml =  '<div class="items col-sm-2 item-product-vendor" data-id="'+result.data[i].id+'">'+
+				productResultId.push(result.data[i].id);
+			}
+
+			jQuery.grep(productResultId, function(el) {
+			      if (jQuery.inArray(el, productList) == -1) productNotSame.push(el);
+			});
+
+			console.log(productNotSame);
+
+			var htmlEmptyProductPurchaseVendor = '<div class="row">'+
+					            '<div class="col-sm-12">'+
+					                '<div class="panel panel-default">'+
+					    
+					            '<div class="panel-body" style="height: 30vh;padding-top: 8vh;">'+
+					            '<div class="text-center"><h4><b>Semua Komoditas Petani Telah Dipilih</b></h4></div>'+
+					            '<div class="text-center"><button class="btn btn-success" id="addNewComodityChooseVendorNotSame"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Baru</button></div>'+
+					        '</div>'+
+					    
+					    '</div>'+
+
+			            '</div>'+
+        			'</div>'
+
+			if(productNotSame.length==0){
+
+				$('#product_vendor_container').html(htmlEmptyProductPurchaseVendor);
+
+				$('#addNewComodityChooseVendorNotSame').click(function(){
+					window.location.href="/product";
+				})
+
+			}else{
+
+				$('#panel_action_comodity').css('display','block');
+
+				$('#addNewComodityChooseVendor').click(function(){
+					window.location.href="/product";
+				})
+
+				for (var j = 0;  j< result.data.length; j++) {
+
+					for (var k = 0; k < productNotSame.length; k++) {
+						if(result.data[j].id == productNotSame[k]){
+							productVendorHtml =  '<div class="items col-sm-2 item-product-vendor" data-id="'+result.data[j].id+'">'+
                                             '<div class="info-block block-info clearfix">'+
                                                 
                                                 '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
                                                     
-                                                	'<label class="btn btn-default product-vendor-label" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;">'+
-                                              
-                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
-                                             
-                                                         '<div class="bizcontent">'+
-                                                            '<h5 style="font-weight:bold;">'+result.data[i].name+'</h5>'+
-                                                            '<h5>'+result.data[i].x_kategori_produk+'</h5>'+
-                                                            '<input type="checkbox" id="checkbox_'+result.data[i].id+'" class="vendor-product-checkbox" data-id="'+result.data[i].id+'" style="display:none;" >'+
+                                                	'<label class="btn btn-default product-vendor-label" id="product_vendor_label_'+result.data[j].id+'" style="padding: 0;">'+
+                                              		   
+                                              		   '<div id="check_image_comodity"style="display:none;position: absolute;font-size: 20px;background: rgb(56, 86, 107);width:100%;"><i class="glyphicon glyphicon-ok"></i></div>'+
+                                                         
+                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[j].image_medium+'">'+
+                                             			 '<div class="bizcontent">'+
+                                                            '<h5 style="font-weight:bold;">'+result.data[j].name+'</h5>'+
+                                                            '<h5>'+result.data[j].x_kategori_produk+'</h5>'+
+                                                            '<input type="checkbox" id="checkbox_'+result.data[j].id+'" class="vendor-product-checkbox" data-id="'+result.data[j].id+'" style="display:none;" >'+
                                                             
                                                         '</div>'+
                                                 
@@ -811,28 +890,21 @@ function chooseVendorProduct(){
                                             '</div>'+
                                         '</div>';
 
+                        	$('#product_vendor_container').append(productVendorHtml);
 
-                $('#product_vendor_container').append(productVendorHtml);
+						}
+						
+					}
+					
+				}
+
 			}
 
-            if (vendorProduct!=null) {
-              for (var k = 0; k < result.data.length; k++) {
-              	console.log('test');
-
-              	for (var j = 0; j < vendorProduct.length; j++) {
-            		if(result.data[k].id==productList[j]){
-            			$('#checkbox_'+result.data[k].id).attr('data-productvendor', vendorProduct[j]);
-            			$('#product_vendor_label_'+result.data[k].id).addClass("active");
-	 					$('#checkbox_'+result.data[k].id).prop('checked', true);
-            		}
-            		
-
-            	}
-
-
-              }
-            	
-            }
+           
+       //      			$('#checkbox_'+result.data[k].id).attr('data-productvendor', vendorProduct[j]);
+       //      			$('#product_vendor_label_'+result.data[k].id).addClass("active");
+	 					// $('#checkbox_'+result.data[k].id).prop('checked', true);
+	 					
 
 
 			datePickerEvent();
@@ -848,6 +920,8 @@ function chooseVendorProduct(){
 		        if($(this).is(':checked')){
 
 		        	// console.log(productId);
+
+		        	$('#check_image_comodity').css('display','block');
 
 		            $("#productVendorModal").modal({backdrop: 'static', keyboard: false});
 
@@ -890,7 +964,7 @@ function chooseVendorProduct(){
 
 					          	$('#submitProductVendor').removeAttr('disabled');
 
-					          	$("#body_success").text("vendor product success added");
+					          	$("#body_success").text("Komoditas Petani Berhasil Ditambahkan");
 
 					          	$("#productVendorModalSuccess").modal();
 					            console.log(data);
@@ -917,13 +991,14 @@ function chooseVendorProduct(){
 		 				$('#product_vendor_label_'+productId).removeClass("active");
 		 				$('#checkbox_'+productId).prop('checked', false);
 
-		 				
+		 				$('#check_image_comodity').css('display','none');
 		 			})
-
 		            
 		        }else{
 
 		        	console.log('unchecked');
+
+		        	$('#check_image_comodity').css('display','none');
 
 		        	//delete vendor product
 		        	var productVendor = $(this).data('productvendor');
@@ -945,7 +1020,7 @@ function chooseVendorProduct(){
 					          success: function(data){
 
 					            console.log(data);
-					            $("#body_success").text("vendor product success deleted");
+					            $("#body_success").text("Komoditas Petani Telah Dihapus");
 
 								$("#productVendorModalSuccess").modal();
 					            // location.reload();

@@ -28,11 +28,19 @@
                  <div class="row">
                     <div class="col-sm-12">
                        <div class="panel-body">
-                            
+                             <div class="row" id="panel_action_comodity" style="display:none;">
+                                    <div class="form-group">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <button class="btn btn-success" id="nextProductVendor" ><i class="glyphicon glyphicon-check"></i> Konfirmasi</button>
+                                            <button class="btn btn-primary" id="addNewComodityChooseVendor"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Baru</button>
+                                            <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
+                                        </div>
+                                    </div>
+                            </div>
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <input type="search" class="form-control" id="search" placeholder="Search Product..">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -47,13 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-sm-12 col-md-12 col-lg-12" style="text-align:right;margin-top:10px;">
-                                            <button class="btn btn-primary" id="nextProductVendor">Next</button>
-                                        </div>
-                                    </div>
-                            </div>
+                           
                         </div>
 
                     </div>
@@ -109,7 +111,7 @@
 
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Komoditas Vendor</h4>
+            <h4 class="modal-title"><b>Notifikasi</b></h4>
           </div>
           <div class="modal-body" id="body_success">
 
@@ -129,7 +131,7 @@
 
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Komoditas Vendor</h4>
+            <h4 class="modal-title"><b>Notifikasi</b></h4>
           </div>
           <div class="modal-body body-failed" id="body_failed">
 

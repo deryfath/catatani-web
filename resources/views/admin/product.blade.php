@@ -77,7 +77,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="name">Nama</label>
-                        <input type="text" name="product_name" class="form-control">
+                        <input type="text" name="product_name" class="form-control" required>
                     </div>
                      <div class="form-group">
                         <label for="product_category_create">Kategori</label>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <label>Pilih Image</label>
-                        <input type="file" name="product_image" id="product_file_image_create">
+                        <input type="file" name="product_image" id="product_file_image_create" required>
 
                         <img id="product_image_create" src="http://placehold.it/512x512" style="margin-top:10px;width:23%;" />
                     </div>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-group">
                         <label>Choose Image</label>
-                        <input type="file" name="product_image" id="product_file_image">
+                        <input type="file" name="product_file_image" id="product_file_image">
                         
                         <img id="product_image" style="margin-top:10px;" />
 

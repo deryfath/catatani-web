@@ -107,11 +107,8 @@ class InventoryController extends Controller
         		if($purchaseOrderLine[$i]['partner_id'][0]==$product[0]['vendor'][$l][0]['name'][0]){
 
         			$purchaseOrderLine[$i]['origin'] = $product[0]['vendor'][$l][0]['x_product_origin'];
-        			break;
-        		}else{
-                    $purchaseOrderLine[$i]['origin'] = "unknown";
-
-                }
+        		
+        		}
         	}
 
         }

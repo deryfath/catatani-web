@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Kuantitas (Kg) </label>
-                        <input class="form-control" type="number" id="product_vendor_purchase_quantity" value="0" />
+                        <input class="form-control" type="number" id="product_vendor_purchase_quantity" value="1" />
                     </div>
                     <!-- <div class="form-group" style="text-align: center;">
                         <label for="address">Rating</label>

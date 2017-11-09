@@ -29,7 +29,7 @@
                     <div class="col-sm-12"> 
                         
                         <div class="panel-body">
-                            <a href="#createVendorModal" data-toggle="modal" class="btn btn-primary add-vendor"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</a>
+                            <a href="#createVendorModal" data-toggle="modal" class="btn btn-primary add-vendor"><i class="glyphicon glyphicon-plus"></i> Tambah Petani</a>
                    
                         </div>
 
@@ -55,9 +55,9 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Farm Name</th>
-                                        <th>Address</th>
+                                        <th>Farm Name </th>
                                         <th>Phone</th>
+                                        <th>Address</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

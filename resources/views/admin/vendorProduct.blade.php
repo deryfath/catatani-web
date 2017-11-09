@@ -28,7 +28,7 @@
                     <div class="col-sm-12">
 
                         <div class="panel-body">
-                            <button  class="btn btn-primary add-vendor-product"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</button>
+                            <button  class="btn btn-primary add-vendor-product"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Petani</button>
                         </div>
                         
                         @if (session('status'))

@@ -127,11 +127,12 @@ class ProductController extends Controller
         $category = $request->input('category');
         $image = $request->input('image');
 
+        $logger->info('Image '. $image);
+
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
         $response = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'write',array(array($id), array('name'=>$name,'image'=>$image,'x_kategori_produk'=>$category)));
         // $response2 = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'name_get',array(array($id)));
 
-        // $logger->info('Foo '. var_export($response, true));
         $request->session()->flash('status', 'Product Updated!');
 
         return response()->json(array('data'=> $response), 200);
@@ -159,7 +160,7 @@ class ProductController extends Controller
         if( isset( $response['faultCode'] ) ){
         	$request->session()->flash('statusError', 'Vendor Delete Failed!');
         }else {
-        	$request->session()->flash('status', 'Vendor Deleted!');
+        	$request->session()->flash('status', 'Product Deleted!');
         }
 
         // $logger->info('Foo '. var_export($response, true));

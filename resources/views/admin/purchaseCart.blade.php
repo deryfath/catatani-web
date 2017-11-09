@@ -29,7 +29,9 @@
                     <div class="col-sm-12">
                          <div class="panel-body">
                                 <button class="btn btn-success" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchase"><i class="glyphicon glyphicon-saved"></i> Konfirmasi</button>
-                            </div>  
+                            </div> 
+
+                     
                         <div class="panel-body">
                             <table class="table table-striped table-hover" id="dataTables-cart-purchase">
                                 <thead>
