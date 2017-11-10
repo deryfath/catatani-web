@@ -83,6 +83,10 @@ class PurchaseController extends Controller
       			$data[$i]['purchase_status'] = "Menunggu Pembayaran"; 
       		}
       		$data[$i]['vendor_name'] = $data[$i]['partner_id'][1];
+
+            $string_version = implode(',', $data[$i]['order_line']);
+            $data[$i]['action'] = '<button style="margin-right:10px;" data-total="'.$data[$i]['amount_total'].'" data-vendor="'.$data[$i]['vendor_name'].'" data-orderline="'.$string_version.'" class="btn btn-xs btn-primary detail-purchase"><i class="glyphicon glyphicon-eye-open"></i> Detail</button>';
+       
       	 }
 
         return response()->json(array('data'=> $data), 200);

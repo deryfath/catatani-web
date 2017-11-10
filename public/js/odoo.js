@@ -1160,11 +1160,37 @@ function getPurchaseList(){
 	            "data" : "amount_total"
 	        }, {
 	            "data" : "purchase_status"
+	        }, {
+	            "data" : "action", "orderable": false, "searchable": false
 	        }]
 	    });
 
 
 	});
+
+	$('#dataTables-purchase').on('click', '.detail-purchase', function(){
+
+		var orderLine = String($(this).data('orderline'));
+		var order = [];
+
+		if (orderLine.includes(",")){
+			order = $(this).data('orderline').split(",");
+		}else{
+			order.push($(this).data('orderline'));
+		}
+
+		var orderInt = [];
+		
+		for (var i = 0; i < order.length; i++) {
+		  orderInt.push(parseInt(order[i]));
+		}
+		 
+		var total = $(this).data('total');
+		var vendor = $(this).data('vendor');
+
+		console.log(orderInt);
+
+	})
 
 	$('.add-product-purchase').click(function(){
   		window.location.href = "/choose/product/purchase";
