@@ -158,9 +158,9 @@ class ProductController extends Controller
         $response = $models->execute_kw($this->db, $this->uid, $this->password,'product.template', 'unlink',array(array($id)));
         
         if( isset( $response['faultCode'] ) ){
-        	$request->session()->flash('statusError', 'Vendor Delete Failed!');
+        	$request->session()->flash('statusError', 'Gagal menghapus komoditi yang sudah masuk proses Transaksi Pembelian');
         }else {
-        	$request->session()->flash('status', 'Product Deleted!');
+        	$request->session()->flash('status', 'Komoditi Berhasil Dihapus!');
         }
 
         // $logger->info('Foo '. var_export($response, true));

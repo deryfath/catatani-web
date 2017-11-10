@@ -5,7 +5,7 @@
      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
+          <h1 class="page-header-custom">
             Pilih Komoditas
           </h1>
           <ol class="breadcrumb">
@@ -37,13 +37,7 @@
                                         </div>
                                     </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            
                             
                             <div class="row">
                                 <div class="form-group">

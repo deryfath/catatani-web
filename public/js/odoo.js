@@ -14,6 +14,14 @@ if(window.location.pathname== "/" ){
 
 
 }else if(window.location.pathname == "/product"){
+	$('#search').on('keyup', function() {
+        var pattern = $(this).val();
+        $('.searchable-container .items').hide();
+        $('.searchable-container .items').filter(function() {
+            return $(this).text().match(new RegExp(pattern, 'i'));
+        }).show();
+    });
+
 	getProductList();
 }else if(window.location.pathname == "/choose/product"){
 	 $('#search').on('keyup', function() {
@@ -27,6 +35,14 @@ if(window.location.pathname== "/" ){
 	 chooseVendorProduct();
 
 }else if(window.location.pathname == "/edit/vendor/product"){
+	$('#search').on('keyup', function() {
+        var pattern = $(this).val();
+        $('.searchable-container .items').hide();
+        $('.searchable-container .items').filter(function() {
+            return $(this).text().match(new RegExp(pattern, 'i'));
+        }).show();
+    });
+
 	editVendorProduct();
 
 }else if(window.location.pathname == "/purchase"){
@@ -169,44 +185,46 @@ function getProductList(){
 
 					// }
 
-					var cardHtml =  '<div class="col-sm-2 card-product">'+
-	                                       '<div class="thumbnail">'+
-	                                            '<img class="card-img-top" style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'" alt="Card image cap">'+
-	                                 				'<div class="caption">'+
-	                                                 '<p class="card-text" style="text-align:center;font-weight: bold;">'+result.data[i].name+'</p>'+
-	                                                 '<p class="card-text" style="text-align:center;margin-top: -10px;">'+result.data[i].x_kategori_produk+'</p>'+
+					var cardHtml =  
 
-	                                                // '<button class="btn btn-default btn-xs pull-right edit-product" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" data-kategori="'+result.data[i].x_kategori_produk+'" data-plant="'+result.data[i].x_tanggal_awal_tanam+" - "+result.data[i].x_tanggal_akhir_tanam+'" data-harvest="'+result.data[i].x_tanggal_awal_panen+" - "+result.data[i].x_tanggal_akhir_panen+'" data-vendor='+JSON.stringify(arrVendorName)+' data-price='+JSON.stringify(arrVendorPrice)+' role="button"><i class="glyphicon glyphicon-edit"></i>Edit</button>  <button href="#" data-id="'+result.data[i].id+'" data-vendor='+JSON.stringify(arrVendorName)+' class="btn btn-default btn-xs delete-product" role="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>'+
-	                                                '<div class="btn-group">'+
-													  '<button type="button" href="#" data-id="'+result.data[i].id+'" class="btn btn-danger btn-xs delete-product" ><i class="glyphicon glyphicon-trash"></i> Delete</button>'+
-													  '<button type="button" class="btn btn-success btn-xs edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
+									// '<div class="col-sm-2 card-product">'+
+	        //                                '<div class="thumbnail">'+
+	        //                                     '<img class="card-img-top" style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'" alt="Card image cap">'+
+	        //                          				'<div class="caption">'+
+	        //                                          '<p class="card-text" style="text-align:center;font-weight: bold;">'+result.data[i].name+'</p>'+
+	        //                                          '<p class="card-text" style="text-align:center;margin-top: -10px;">'+result.data[i].x_kategori_produk+'</p>'+
+
+	        //                                         // '<button class="btn btn-default btn-xs pull-right edit-product" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" data-kategori="'+result.data[i].x_kategori_produk+'" data-plant="'+result.data[i].x_tanggal_awal_tanam+" - "+result.data[i].x_tanggal_akhir_tanam+'" data-harvest="'+result.data[i].x_tanggal_awal_panen+" - "+result.data[i].x_tanggal_akhir_panen+'" data-vendor='+JSON.stringify(arrVendorName)+' data-price='+JSON.stringify(arrVendorPrice)+' role="button"><i class="glyphicon glyphicon-edit"></i>Edit</button>  <button href="#" data-id="'+result.data[i].id+'" data-vendor='+JSON.stringify(arrVendorName)+' class="btn btn-default btn-xs delete-product" role="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>'+
+	        //                                         '<div class="btn-group">'+
+									// 				  '<button type="button" href="#" data-id="'+result.data[i].id+'" class="btn btn-danger btn-xs delete-product" ><i class="glyphicon glyphicon-trash"></i> Delete</button>'+
+									// 				  '<button type="button" class="btn btn-success btn-xs edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
 													  
-													'</div>'+
-	                                            '</div>'+
-	                                        '</div>'+
-	                                    '</div>';
+									// 				'</div>'+
+	        //                                     '</div>'+
+	        //                                 '</div>'+
+	        //                             '</div>';
 
-	                                    // '<div class="items col-sm-2 item-product">'+
-                                     //        '<div class="info-block block-info clearfix">'+
+	                                    '<div class="items col-sm-2 item-product">'+
+                                            '<div class="info-block block-info clearfix">'+
                                                 
-                                     //            '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
+                                                '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
                                                     
-                                     //            	'<label class="btn btn-default product-vendor-label" id="product_label_'+result.data[i].id+'" style="padding: 0;">'+
+                                                	'<label class="btn btn-default product-label" id="product_label_'+result.data[i].id+'" style="padding: 0;">'+
                                               		   
-                                     //          		   '<div id="panel_action_comodity"style="display:none;position: absolute;font-size: 20px;background: rgb(56, 86, 107);width:100%;"><i class="glyphicon glyphicon-ok"></i></div>'+
+                                              		   '<div id="panel_action_comodity"style="position: absolute;color:wheat;font-size: 15px;background: rgb(56, 86, 107);width:100%;"><i style="margin-right:80px;" class="glyphicon glyphicon-edit edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"></i><i class="glyphicon glyphicon-trash delete-product" data-id="'+result.data[i].id+'"></i></div>'+
                                                          
-                                     //                   '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
-                                     //         			 '<div class="bizcontent">'+
-                                     //                        '<h5 style="font-weight:bold;">'+result.data[i].name+'</h5>'+
-                                     //                        '<h5>'+result.data[i].x_kategori_produk+'</h5>'+
-                                     //                        '<input id="card_'+result.data[i].id+'" class="product-item" data-id="'+result.data[i].id+'" style="display:none;" >'+
+                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
+                                             			 '<div class="bizcontent">'+
+                                                            '<h5 style="font-weight:bold;">'+result.data[i].name+'</h5>'+
+                                                            '<h5>'+result.data[i].x_kategori_produk+'</h5>'+
+                                                            '<input id="card_'+result.data[i].id+'" class="product-item" data-id="'+result.data[i].id+'" style="display:none;" >'+
                                                             
-                                     //                    '</div>'+
+                                                        '</div>'+
                                                 
-                                     //                '</label>'+
-                                     //            '</div>'+
-                                     //        '</div>'+
-                                     //    '</div>';
+                                                    '</label>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>';
 
 	                $('#product_card_row').append(cardHtml);
 	                
@@ -307,7 +325,7 @@ function getProductList(){
 				// window.location.href="/update/product?data="+JSON.stringify(listUpdateProduct);
 			})
 
- 			$('#updateProduct').click(function(){
+ 			$('#updateProduct').unbind('click').click(function(){
 
  				// console.log($(this).data('image'));
 
@@ -347,13 +365,26 @@ function getProductList(){
 
  			})
 
-			$('.delete-product').click(function(){
-				var id = $(this).data('id');
+			var idDeleteProduct = "";
 
-				console.log(id);
+			$('.delete-product').unbind('click').click(function(){
+
+				idDeleteProduct = $(this).data('id');
+
+				// console.log(idDeleteProduct);
+			
+				$("#confirm-delete-product").modal();
+
+				
+			})
+
+			$('#confirmDeleteProduct').on('click', function(e) {
+					
+					// var id = $(this).data('id');
+					console.log(idDeleteProduct);
 
 				   var dataSend = {
-				         id : id
+				         id : idDeleteProduct
 				    }
 
 				   $.ajax({
@@ -367,6 +398,9 @@ function getProductList(){
 				          success: function(data){
 
 				            console.log(data);
+
+				            $("#confirm-delete-product").modal('hide');
+
 				            location.reload();
 				            
 				          },
@@ -374,8 +408,8 @@ function getProductList(){
 				              alert(errMsg);
 				          }
 				      });
-				
-			})
+  
+				});
 			
 
 
@@ -645,22 +679,46 @@ function editVendorProduct(){
 
 	 					// }
 		          		
-		          		var cardVendorProductHtml =  '<div class="col-sm-2 card-product-vendor">'+
-				                                       '<div class="thumbnail">'+
-				                                            '<img class="card-img-top" style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].product_detail[0].image_medium+'" alt="Card image cap">'+
-				                                 				'<div class="caption">'+
-				                                                 '<p class="card-text" style="text-align:center;font-weight: bold;">'+result.data[i].product_detail[0].name+'</p>'+
-				                                                 '<p class="card-text" style="text-align:center;margin-top: -10px;">'+result.data[i].product_detail[0].x_kategori_produk+'</p>'+
+		          		var cardVendorProductHtml = 
 
-				                                                // '<button class="btn btn-default btn-xs pull-right edit-product" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" data-kategori="'+result.data[i].x_kategori_produk+'" data-plant="'+result.data[i].x_tanggal_awal_tanam+" - "+result.data[i].x_tanggal_akhir_tanam+'" data-harvest="'+result.data[i].x_tanggal_awal_panen+" - "+result.data[i].x_tanggal_akhir_panen+'" data-vendor='+JSON.stringify(arrVendorName)+' data-price='+JSON.stringify(arrVendorPrice)+' role="button"><i class="glyphicon glyphicon-edit"></i>Edit</button>  <button href="#" data-id="'+result.data[i].id+'" data-vendor='+JSON.stringify(arrVendorName)+' class="btn btn-default btn-xs delete-product" role="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>'+
-				                                                '<div class="btn-group">'+
-																  '<button type="button" href="#" data-id="'+result.data[i].id+'" class="btn btn-danger btn-xs delete-vendor-product" ><i class="glyphicon glyphicon-trash"></i> Delete</button>'+
-																  '<button type="button" class="btn btn-success btn-xs edit-vendor-product" data-id="'+result.data[i].id+'" data-price="'+result.data[i].price+'" data-origin="'+result.data[i].x_product_origin+'" data-plant="'+plant+'" data-harvest="'+harvest+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
+		          				// 					 '<div class="col-sm-2 card-product-vendor">'+
+				            //                            '<div class="thumbnail">'+
+				            //                                 '<img class="card-img-top" style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].product_detail[0].image_medium+'" alt="Card image cap">'+
+				            //                      				'<div class="caption">'+
+				            //                                      '<p class="card-text" style="text-align:center;font-weight: bold;">'+result.data[i].product_detail[0].name+'</p>'+
+				            //                                      '<p class="card-text" style="text-align:center;margin-top: -10px;">'+result.data[i].product_detail[0].x_kategori_produk+'</p>'+
+
+				            //                                     // '<button class="btn btn-default btn-xs pull-right edit-product" data-id="'+result.data[i].id+'" data-name="'+result.data[i].name+'" data-kategori="'+result.data[i].x_kategori_produk+'" data-plant="'+result.data[i].x_tanggal_awal_tanam+" - "+result.data[i].x_tanggal_akhir_tanam+'" data-harvest="'+result.data[i].x_tanggal_awal_panen+" - "+result.data[i].x_tanggal_akhir_panen+'" data-vendor='+JSON.stringify(arrVendorName)+' data-price='+JSON.stringify(arrVendorPrice)+' role="button"><i class="glyphicon glyphicon-edit"></i>Edit</button>  <button href="#" data-id="'+result.data[i].id+'" data-vendor='+JSON.stringify(arrVendorName)+' class="btn btn-default btn-xs delete-product" role="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>'+
+				            //                                     '<div class="btn-group">'+
+																//   '<button type="button" href="#" data-id="'+result.data[i].id+'" class="btn btn-danger btn-xs delete-vendor-product" ><i class="glyphicon glyphicon-trash"></i> Delete</button>'+
+																//   '<button type="button" class="btn btn-success btn-xs edit-vendor-product" data-id="'+result.data[i].id+'" data-price="'+result.data[i].price+'" data-origin="'+result.data[i].x_product_origin+'" data-plant="'+plant+'" data-harvest="'+harvest+'"><i class="glyphicon glyphicon-edit"></i> Edit</button>'+
 																  
-																'</div>'+
-				                                            '</div>'+
-				                                        '</div>'+
-				                                    '</div>';
+																// '</div>'+
+				            //                                 '</div>'+
+				            //                             '</div>'+
+				            //                         '</div>';
+
+				                               		'<div class="items col-sm-2 item-product-vendor">'+
+			                                            '<div class="info-block block-info clearfix">'+
+			                                                
+			                                                '<div data-toggle="buttons"  class="btn-group bizmoduleselect">'+
+			                                                    
+			                                                	'<label class="btn btn-default product-vendor-label" id="product_vendor_label_'+result.data[i].id+'" style="padding: 0;">'+
+			                                              		   
+			                                              		   '<div id="panel_action_vendor_comodity"style="position: absolute;color:wheat;font-size: 15px;background: rgb(56, 86, 107);width:100%;"><i style="margin-right:80px;" class="glyphicon glyphicon-edit edit-vendor-product" data-id="'+result.data[i].id+'" data-price="'+result.data[i].price+'" data-origin="'+result.data[i].x_product_origin+'" data-plant="'+plant+'" data-harvest="'+harvest+'"></i><i class="glyphicon glyphicon-trash delete-vendor-product" data-supplierid="'+result.data[i].name[0]+'" data-supplierproduct="'+result.data[0].id+'" data-product="'+result.data[i].product_tmpl_id[0]+'"></i></div>'+
+			                                                         
+			                                                       '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].product_detail[0].image_medium+'">'+
+			                                             			 '<div class="bizcontent">'+
+			                                                            '<h5 style="font-weight:bold;">'+result.data[i].product_detail[0].name+'</h5>'+
+			                                                            '<h5>'+result.data[i].product_detail[0].x_kategori_produk+'</h5>'+
+			                                                            '<input id="card_'+result.data[i].id+'" class="product-vendor-item" data-id="'+result.data[i].id+'" style="display:none;" >'+
+			                                                            
+			                                                        '</div>'+
+			                                                
+			                                                    '</label>'+
+			                                                '</div>'+
+			                                            '</div>'+
+			                                        '</div>';
 
 	                	$('#vendor_product_card_row').append(cardVendorProductHtml);
 		          	}
@@ -675,7 +733,9 @@ function editVendorProduct(){
 
 	          	$('.add-vendor-product').click(function(){
 	          		var vendorId = JSON.parse(getParameterByName('vendor_id'));
-	          		window.location.href = "/choose/product?vendor_id="+vendorId+"&vendor_product="+JSON.stringify(arrProductVendorId)+"&product="+JSON.stringify(arrProductId);
+	          		var vendorName = JSON.stringify(getParameterByName('vendor_name')).replace(/['"]+/g, '');
+	          		console.log(vendorName);
+	          		window.location.href = "/choose/product?vendor_id="+vendorId+"&vendor_name="+vendorName+"&vendor_product="+JSON.stringify(arrProductVendorId)+"&product="+JSON.stringify(arrProductId);
 	          	})
 
 	          	$('.edit-vendor-product').click(function(){
@@ -733,11 +793,29 @@ function editVendorProduct(){
 
 	          	})
 
+				var idDeleteVendorSupp = "";
+				var idDeleteVendorProductSupp = "";
+				var idDeleteVendorProduct = "";
+
 	          	$('.delete-vendor-product').click(function(){
-	          		var id = $(this).data('id');
-	          		var dataSend = {
-				         id : id
+	          		idDeleteVendorSupp = $(this).data('supplierid');
+	          		idDeleteVendorProductSupp = $(this).data('supplierproduct');
+	          		idDeleteVendorProduct = $(this).data('product');
+	          	
+				    $("#confirm-delete-product-vendor").modal();
+
+				    
+	          	})
+
+				$('#confirmDeleteProductVendor').click(function(){
+
+					var dataSend = {
+				         supplier_id : idDeleteVendorSupp,
+				         supplier_product : idDeleteVendorProductSupp,
+				         product_id : idDeleteVendorProduct
 				    }
+
+				    console.log(dataSend);
 
 				   $.ajax({
 				          type: "POST",
@@ -750,7 +828,9 @@ function editVendorProduct(){
 				          success: function(data){
 
 				 
-								console.log(data);				            
+								console.log(data);	
+								$("#confirm-delete-product-vendor").modal('hide');
+
 								location.reload();
 				            
 				          },
@@ -758,7 +838,8 @@ function editVendorProduct(){
 				              alert(errMsg);
 				          }
 				      });
-	          	})
+
+				})
 
 	          }
 	    })
@@ -802,6 +883,10 @@ function datePickerEvent(){
 
 
 function chooseVendorProduct(){
+
+	var name = "Pilih Komoditas Petani "+JSON.stringify(getParameterByName('vendor_name')).replace(/['"]+/g, '');
+	console.log(name);
+	$('.page-header-custom').text(name);
 
 	$.ajax({
        type:'GET',
@@ -910,7 +995,11 @@ function chooseVendorProduct(){
 			datePickerEvent();
 
 			$('#nextProductVendor').click(function(){
-				window.location.href="/vendors";
+				
+				var vendorId = JSON.parse(getParameterByName('vendor_id'));
+          		var vendorName = JSON.stringify(getParameterByName('vendor_name')).replace(/['"]+/g, '');
+          		window.location.href = "/edit/vendor/product?vendor_id="+vendorId+"&vendor_name="+vendorName;
+	          
 			})
 
 
@@ -973,6 +1062,8 @@ function chooseVendorProduct(){
 					            console.log(result.data);
 
 					             $('#checkbox_'+productId).attr('data-productvendor', result.data);
+					             $('#checkbox_'+productId).attr('data-productid', productId);
+					             $('#checkbox_'+productId).attr('data-vendorid', vendorId);
 					            // location.reload();
 					            
 					          },
@@ -1002,16 +1093,22 @@ function chooseVendorProduct(){
 
 		        	//delete vendor product
 		        	var productVendor = $(this).data('productvendor');
-		        	console.log(productVendor);
+		        	var productId = $(this).data('productid');
+		        	var vendorId = $(this).data('vendorid');
+
 		        	if(productVendor!=undefined){
 
 					   var dataSend = {
-					         id : productVendor
+					         supplier_id : vendorId,
+					         supplier_product : productVendor,
+					         product_id : productId
 					    }
+
+					    console.log(dataSend);
 
 					   $.ajax({
 					          type: "POST",
-					          url: "/delete/product/vendor",
+					          url: "/delete/product/vendor/choose",
 					          headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
 					          // The key needs to match your method's input parameter (case-sensitive).
 					          data: JSON.stringify(dataSend),
@@ -1020,7 +1117,7 @@ function chooseVendorProduct(){
 					          success: function(data){
 
 					            console.log(data);
-					            $("#body_success").text("Komoditas Petani Telah Dihapus");
+					            $("#body_success").text("Komoditas Petani Berhasil Dihapus");
 
 								$("#productVendorModalSuccess").modal();
 					            // location.reload();

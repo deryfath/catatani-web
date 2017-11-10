@@ -224,12 +224,52 @@ class VendorController extends Controller
 
         $logger->info('Foo '.$request->input('id'));
 
-        $id = $request->input('id');
+        $supplierId = $request->input('supplier_id');
+        $supplierProduct = $request->input('supplier_product');
+        $productId = $request->input('product_id');
 
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $response = $models->execute_kw($this->db, $this->uid, $this->password,'product.supplierinfo', 'unlink',array(array($id)));
+
+        //check product in purchase order line
+        $data = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line','search_read', array(array(array('product_id', '=', $productId),array('partner_id', '=', $supplierId))),array());
+
+        if(count($data)==0){
+            $response = $models->execute_kw($this->db, $this->uid, $this->password,'product.supplierinfo', 'unlink',array(array($supplierProduct)));
+            $request->session()->flash('status', 'Komoditi Petani Berhasil Dihapus!');
+        }else{
+            $request->session()->flash('statusError', 'Gagal menghapus komoditi Petani yang sudah masuk proses Transaksi Pembelian');
+            $response = "false";
+        }
         
-        $logger->info('Foo '.$response);
+        // $logger->info('Foo '.$response);
+
+        return response()->json(array('data'=> $response), 200);
+    }
+
+    /**
+     * delete the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteVendorProductChoose(Request $request){
+
+        $logger = new Logger('delete_vendor_product');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        $logger->info('Foo '.$request->input('id'));
+
+        $supplierId = $request->input('supplier_id');
+        $supplierProduct = $request->input('supplier_product');
+        $productId = $request->input('product_id');
+
+        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+
+        //check product in purchase order line
+        $response = $models->execute_kw($this->db, $this->uid, $this->password,'product.supplierinfo', 'unlink',array(array($supplierProduct)));
+        
+        // $logger->info('Foo '.$response);
 
         return response()->json(array('data'=> $response), 200);
     }

@@ -29,6 +29,7 @@
 
                         <div class="panel-body">
                             <button  class="btn btn-primary add-vendor-product"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Petani</button>
+                            <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
                         </div>
                         
                         @if (session('status'))
@@ -48,8 +49,12 @@
                                  {{ session('statusError') }}
                             </div>
                         @endif
-                        <div class="panel-body">
-                                <div class="row" id="vendor_product_card_row">
+                        <div class="panel-body" style="margin-top: -22px;">
+
+                                <div class="row">
+                                  <div class="form-group">
+                                    <div class="searchable-container" id="vendor_product_card_row"></div>
+                                  </div>
                                    
                                 </div>
                                 <!--/row-->
@@ -102,6 +107,23 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="modal fade" id="confirm-delete-product-vendor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>Notifikasi</b>
+                </div>
+                <div class="modal-body">
+                    Apakah yakin menghapus komoditi Petani ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-danger btn-ok-vendor-product" id="confirmDeleteProductVendor">Hapus</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

@@ -27,6 +27,8 @@
                     <div class="col-sm-12">
                         <div class="panel-body">
                              <a href="#createProductModal" data-toggle="modal" class="btn btn-primary add-Product"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</a>
+                              <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
+
                         </div>
                         @if (session('status'))
                             <div class="alert alert-success  alert-dismissable" style="margin: 0px 14px;" role="alert">
@@ -45,11 +47,15 @@
                                  {{ session('statusError') }}
                             </div>
                         @endif
-                        <div class="panel-body">
-                                <div class="row" id="product_card_row">
+                        <div class="panel-body" style="margin-top: -22px;">
+
+                                <div class="row">
+                                  <div class="form-group">
+                                    <div class="searchable-container" id="product_card_row"></div>
+                                  </div>
                                    
                                 </div>
-                                <!--/row-->
+                                
                         </div>
 
                     </div>
@@ -153,6 +159,23 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="modal fade" id="confirm-delete-product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>Notifikasi</b>
+                </div>
+                <div class="modal-body">
+                    Apakah yakin menghapus komoditi ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-danger btn-ok" id="confirmDeleteProduct">Hapus</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

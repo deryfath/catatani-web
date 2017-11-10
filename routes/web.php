@@ -77,6 +77,8 @@ Route::post('/get/product/vendor','VendorController@getVendorProduct');
 
 Route::post('/delete/product/vendor', 'VendorController@deleteVendorProduct');
 
+Route::post('/delete/product/vendor/choose', 'VendorController@deleteVendorProductChoose');
+
 Route::post('/update/product/vendor', 'VendorController@updateVendorProduct');
 
 Route::get('/edit/vendor/product', function() {
