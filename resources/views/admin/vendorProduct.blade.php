@@ -29,7 +29,12 @@
 
                         <div class="panel-body">
                             <button  class="btn btn-primary add-vendor-product"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Petani</button>
-                            <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
+                            <div class="input-group col-sm-3 pull-right">
+                                  <span class="input-group-addon">
+                                      <i class="glyphicon glyphicon-search"></i>
+                                  </span>
+                                  <input type="text" id="search" class="form-control" placeholder="Cari Komoditas..."/>
+                              </div>
                         </div>
                         
                         @if (session('status'))

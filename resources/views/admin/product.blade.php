@@ -27,8 +27,12 @@
                     <div class="col-sm-12">
                         <div class="panel-body">
                              <a href="#createProductModal" data-toggle="modal" class="btn btn-primary add-Product"><i class="glyphicon glyphicon-plus"></i> Tambah Baru</a>
-                              <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
-
+                             <div class="input-group col-sm-3 pull-right">
+                                  <span class="input-group-addon">
+                                      <i class="glyphicon glyphicon-search"></i>
+                                  </span>
+                                  <input type="text" id="search" class="form-control" placeholder="Cari Komoditas..."/>
+                              </div>
                         </div>
                         @if (session('status'))
                             <div class="alert alert-success  alert-dismissable" style="margin: 0px 14px;" role="alert">

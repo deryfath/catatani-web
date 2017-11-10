@@ -33,7 +33,12 @@
                                         <div class="col-sm-12 col-md-12 col-lg-12">
                                             <button class="btn btn-success" id="nextProductVendor" ><i class="glyphicon glyphicon-check"></i> Konfirmasi</button>
                                             <button class="btn btn-primary" id="addNewComodityChooseVendor"><i class="glyphicon glyphicon-plus"></i> Tambah Komoditas Baru</button>
-                                            <input type="search" class="pull-right" id="search" placeholder="Cari Komoditas.." >
+                                            <div class="input-group col-sm-3 pull-right">
+                                                  <span class="input-group-addon">
+                                                      <i class="glyphicon glyphicon-search"></i>
+                                                  </span>
+                                                  <input type="text" id="search" class="form-control" placeholder="Cari Komoditas..."/>
+                                              </div>
                                         </div>
                                     </div>
                             </div>
