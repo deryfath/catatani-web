@@ -35,7 +35,7 @@
                               </div>
                         </div>
                         @if (session('status'))
-                            <div class="alert alert-success  alert-dismissable" style="margin: 0px 14px;" role="alert">
+                            <div class="alert alert-success  alert-dismissable" id="success-alert" style="margin: 0px 14px;" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -43,7 +43,7 @@
                                  {{ session('status') }}
                             </div>
                         @elseif (session('statusError'))
-                            <div class="alert alert-warning  alert-dismissable" style="margin: 0px 14px;" role="alert">
+                            <div class="alert alert-warning  alert-dismissable" id="failed-alert" style="margin: 0px 14px;" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>

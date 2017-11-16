@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1><b>
-            Review Pembelian
+            Keranjang Pembelian
           </b></h1>
           <ol class="breadcrumb">
             <!-- li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li-->
@@ -27,8 +27,10 @@
               <div class="box-body">
                  <div class="row">
                     <div class="col-sm-12">
-                         <div class="panel-body">
-                                <button class="btn btn-success" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchase"><i class="glyphicon glyphicon-saved"></i> Konfirmasi</button>
+
+
+                        <div class="panel-body">
+                                <button class="btn btn-success" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchase"><i class="glyphicon glyphicon-saved"></i> Bayar</button>
                             </div> 
 
                      
@@ -58,6 +60,8 @@
                             
                            
                         </div>
+
+
 
                     </div>
                 </div>

@@ -137,8 +137,6 @@ class PurchaseController extends Controller
     	return response()->json(array('data'=> $data), 200);
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -237,6 +235,55 @@ class PurchaseController extends Controller
         $request->session()->flash('status', 'Vendor Product Updated!');
 
         return response()->json(array('data'=> $response), 200);
+    }
+
+    /**
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function dataProductVendorPurchaseLine(Request $request)
+    {
+
+        $logger = new Logger('data_purchase');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        // $this->arrProduct = array();
+        
+        $this->arrProduct = $request->input('arr_order');
+
+        $logger->info('ARR '.var_export($this->arrProduct,true));
+
+        session(['arrProductPurchaseLine' => $this->arrProduct]);
+
+        return response()->json(array('data'=> $this->arrProduct), 200);
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataProductPurchaseLine(){
+        $logger = new Logger('get_data_purchase');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        $data = session('arrProductPurchaseLine');
+
+        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+        
+        $arrDetail = array();
+        for ($i=0; $i < count($data[0]); $i++) { 
+
+           $dataDetail = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line','search_read', array(array(array('id', '=', $data[0][$i]))),array());
+           
+           array_push($arrDetail, $dataDetail[0]);
+        }
+
+        return response()->json(array('data'=> $arrDetail), 200);
     }
 
 

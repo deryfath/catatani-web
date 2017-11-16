@@ -117,6 +117,18 @@ Route::get('/cart/product/purchase', function() {
 
 Route::post('/update/purchase/comodity/price', 'PurchaseController@updateComodityPricePurchase');
 
+Route::post('/data/product/vendor/purchase/line', 'PurchaseController@dataProductVendorPurchaseLine');
+
+Route::get('/data/product/vendor/purchase/line', 'PurchaseController@getDataProductPurchaseLine');
+
+Route::get('/purchase/detail', function() {
+    return View::make('admin.purchaseDetail');
+})->middleware('auth');
+
+Route::get('/purchase/payment', function() {
+    return View::make('admin.purchasePayment');
+})->middleware('auth');
+
 //INVENTORY
 Route::get('/inventory/comodity', function () {
     return View::make('admin.inventoryProduct');

@@ -317,7 +317,7 @@ class VendorController extends Controller
         
 
 
-        $request->session()->flash('status', 'Vendor Product Updated!');
+        $request->session()->flash('status', 'Komoditas Petani berhasil di update!');
 
         return response()->json(array('data'=> $response), 200);
     }

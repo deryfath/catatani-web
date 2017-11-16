@@ -133,7 +133,7 @@ class ProductController extends Controller
         $response = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'write',array(array($id), array('name'=>$name,'image'=>$image,'x_kategori_produk'=>$category)));
         // $response2 = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'name_get',array(array($id)));
 
-        $request->session()->flash('status', 'Product Updated!');
+        $request->session()->flash('status', 'Product Berhasil di update!');
 
         return response()->json(array('data'=> $response), 200);
     }
