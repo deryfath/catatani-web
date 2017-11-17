@@ -91,6 +91,7 @@ $('ul.treeview-menu a').filter(function() {
 	 return this.href == urlGeneral;
 }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active'); 
 
+
 ///////////////////////////////////////////////PRODUCT/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var listUpdateProduct = {};
@@ -1869,6 +1870,13 @@ function getDataPurchasePayment(){
 	        }]
 	    });
 
+	    $('input[name="date_order_purchase"]').daterangepicker({
+	        singleDatePicker: true,
+	        showDropdowns: true,
+	        locale: {
+	            format: 'DD MMMM YYYY'
+	        }
+	    });
 
 	    $('#confirmPurchasePayment').unbind('click').click(function(){
 			
@@ -1878,8 +1886,19 @@ function getDataPurchasePayment(){
 				arrCart.push(table.row(i).data());
 			}
 
+			var now = new Date();
+			var hours = now.getHours();
+			var minutes = now.getMinutes();
+			var seconds = now.getSeconds();
+
+			var dateTimeStr = document.getElementById('date_order_purchase').value+" "+hours+":"+minutes+":"+seconds;
+			var newDateTime = new Date(dateTimeStr);
+
+			console.log(newDateTime);
+
 			var dataSend = {
-		         arr_product : arrCart
+		         arr_product : arrCart,
+		         date_order : newDateTime
 		    }
 
 		    console.log(dataSend);

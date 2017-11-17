@@ -152,6 +152,8 @@ class PurchaseController extends Controller
 
         $arrDataCart = $request->input('arr_product');
 
+        $date_order = $request->input('date_order');
+
 		$logger->info('ARR CART'.var_export($arrDataCart,true));	
 
         $now = date("Y-m-d H:i:s");
@@ -165,8 +167,10 @@ class PurchaseController extends Controller
         $partner = explode(",",$arrDataCart[0]['vendor_name']);
         $partnerId = (int)$partner[0];
 
+
+
         //PURCHASE
-        $purchase = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order', 'create',array(array('partner_id'=>$partnerId,'state'=>'purchase')));
+        $purchase = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order', 'create',array(array('partner_id'=>$partnerId,'state'=>'purchase','date_order'=>$date_order)));
         // $purchaseLine = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line', 'create',array(array('name'=>$purchaseName,'date_planned'=>$now,'product_id'=>20,'order_id'=>$purchase,'product_uom'=>1, 'product_qty'=>1.0,  'price_unit'=>2000)));
         
         $arrPurchaseLineId = array();

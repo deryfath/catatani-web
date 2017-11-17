@@ -31,13 +31,34 @@
 
                         <div class="panel-body">
                                 <button class="btn btn-success" onclick="this.disabled=true;this.value='Sending, please wait...';" id="confirmPurchasePayment"><i class="glyphicon glyphicon-saved"></i> Konfirmasi</button>
-                            </div> 
+                                
+                        </div> 
 
                         <div class="panel-body" style="margin-bottom: -30px;margin-top: -10px;">
                             <div id="alertMessagePayment">
                                 
                             </div>
                         </div>
+
+                        <div class="panel-body" style="margin-top:-10px;margin-bottom: -24px;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Tanggal Pembelian :</label>
+
+                                        <div class="input-group">
+                                          <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                          </div>
+                                            <input type="text" id="date_order_purchase" name="date_order_purchase" class="form-control">
+                                        </div>
+                                        <!-- /.input group -->
+                                      </div>   
+                                </div>
+                            </div>
+                             
+                        </div>
+                        
 
                         <div class="panel-body">
                             
