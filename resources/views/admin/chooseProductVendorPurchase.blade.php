@@ -92,6 +92,14 @@
                         <label for="address">Kuantitas (Kg) </label>
                         <input class="form-control" type="number" id="product_vendor_purchase_quantity" value="1" />
                     </div>
+                    <div class="form-group">
+                        <label for="address">Barcode ID </label>
+                        <input class="form-control" id="product_vendor_purchase_barcode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Lokasi Penyimpanan </label>
+                        <input class="form-control" id="product_vendor_purchase_location"/>
+                    </div>
                     <!-- <div class="form-group" style="text-align: center;">
                         <label for="address">Rating</label>
                           <div class='rating-stars text-center'>

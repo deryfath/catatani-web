@@ -1482,12 +1482,16 @@ function getProductVendorPurchase(id){
 							quantity:qty,
 							vendor_name:partnerName,
 							subtotal:parseInt(qty)*parseInt(document.getElementById("product_vendor_purchase_price").value),
-							quality:rating
+							quality:rating,
+							barcode:document.getElementById("product_vendor_purchase_barcode").value,
+							location:document.getElementById("product_vendor_purchase_location").value
 						})
 
 						console.log(arrProduct);
 						$("#productVendorPurchaseModal").modal('hide');
 					    document.getElementById("product_vendor_purchase_quantity").value = 1;
+					    document.getElementById("product_vendor_purchase_barcode").value = "";
+					    document.getElementById("product_vendor_purchase_location").value = "";
 					          	
 						$('#submitProductVendorPurchase').removeAttr('disabled');
 
@@ -1837,6 +1841,40 @@ function getDataProductVendorPurchase () {
 
 function getDataPurchasePayment(){
 
+	var arrDataExt = [];
+
+	$.ajax({
+       type:'GET',
+       url:'/data/product/vendor/purchase',
+       // async: true,
+       success:function(data){ 		
+
+ 			//get vendor
+       		console.log(data);
+
+       		var result = data;
+       		var accTotal = 0;
+
+       		for (var i = 0; i < result.data.length; i++) {
+       			
+       			accTotal = accTotal + parseInt(result.data[i].subtotal);
+
+       			arrDataExt.push({
+       				barcode : result.data[i].barcode,
+       				location : result.data[i].location
+       			})
+       		}
+
+       		console.log(accTotal);
+
+			console.log(arrDataExt);
+
+       		$('#total_payment_purchase').text(accTotal);
+
+
+       }
+    })
+
 	$(document).ready(function() {
 		// var editor = new $.fn.dataTable.Editor( {
 		// 	        idSrc:  'product_id',
@@ -1878,12 +1916,21 @@ function getDataPurchasePayment(){
 	        }
 	    });
 
+	    $('input[name="date_payment_purchase"]').daterangepicker({
+	        singleDatePicker: true,
+	        showDropdowns: true,
+	        locale: {
+	            format: 'DD MMMM YYYY'
+	        }
+	    });
+
 	    $('#confirmPurchasePayment').unbind('click').click(function(){
 			
 			var arrCart = [];
 			for (var i = 0; i < table.rows().data().length; i++) {
 				console.log(table.row(i).data());
 				arrCart.push(table.row(i).data());
+
 			}
 
 			var now = new Date();
@@ -1891,14 +1938,18 @@ function getDataPurchasePayment(){
 			var minutes = now.getMinutes();
 			var seconds = now.getSeconds();
 
-			var dateTimeStr = document.getElementById('date_order_purchase').value+" "+hours+":"+minutes+":"+seconds;
-			var newDateTime = new Date(dateTimeStr);
+			var dateTimeStrOrder = document.getElementById('date_order_purchase').value+" "+hours+":"+minutes+":"+seconds;
+			var newDateTimeOrder = new Date(dateTimeStrOrder);
+			var dateTimeStrPayment = document.getElementById('date_payment_purchase').value+" "+hours+":"+minutes+":"+seconds;
+			var newDateTimePayment = new Date(dateTimeStrPayment);
 
-			console.log(newDateTime);
+			console.log(newDateTimeOrder);
 
 			var dataSend = {
 		         arr_product : arrCart,
-		         date_order : newDateTime
+		         date_order : newDateTimeOrder,
+		         date_payment : newDateTimePayment,
+		         arr_product_ext : arrDataExt
 		    }
 
 		    console.log(dataSend);
@@ -1970,30 +2021,7 @@ function getDataPurchasePayment(){
 		$('#messageTextPayment').text('Metode pembayaran Transfer telah dipilih');
 	})
 
-	$.ajax({
-       type:'GET',
-       url:'/data/product/vendor/purchase',
-       // async: true,
-       success:function(data){ 		
-
- 			//get vendor
-       		console.log(data);
-
-       		var result = data;
-       		var accTotal = 0;
-
-       		for (var i = 0; i < result.data.length; i++) {
-       			
-       			accTotal = accTotal + parseInt(result.data[i].subtotal);
-       		}
-
-       		console.log(accTotal);
-
-       		$('#total_payment_purchase').text(accTotal);
-
-
-       }
-    })
+	
 
 }
 

@@ -152,7 +152,11 @@ class PurchaseController extends Controller
 
         $arrDataCart = $request->input('arr_product');
 
+        $arrDataCartExt = $request->input('arr_product_ext');
+
         $date_order = $request->input('date_order');
+
+        $date_payment = $request->input('date_payment');
 
 		$logger->info('ARR CART'.var_export($arrDataCart,true));	
 
@@ -170,13 +174,13 @@ class PurchaseController extends Controller
 
 
         //PURCHASE
-        $purchase = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order', 'create',array(array('partner_id'=>$partnerId,'state'=>'purchase','date_order'=>$date_order)));
+        $purchase = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order', 'create',array(array('partner_id'=>$partnerId,'state'=>'purchase','date_order'=>$date_order, 'x_payment_date'=>$date_payment)));
         // $purchaseLine = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line', 'create',array(array('name'=>$purchaseName,'date_planned'=>$now,'product_id'=>20,'order_id'=>$purchase,'product_uom'=>1, 'product_qty'=>1.0,  'price_unit'=>2000)));
         
         $arrPurchaseLineId = array();
 
         for ($i=0; $i<count($arrDataCart) ; $i++) { 
-        	$arrPurchaseLineId[$i] = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line', 'create',array(array('name'=>$purchaseName,'date_planned'=>$now,'product_id'=>$arrDataCart[$i]['product_id'],'x_quality_product'=>$arrDataCart[$i]['quality'],'order_id'=>$purchase,'product_uom'=>1, 'product_qty'=>$arrDataCart[$i]['quantity'], 'qty_received'=>$arrDataCart[$i]['quantity'], 'price_unit'=>$arrDataCart[$i]['price'])));
+        	$arrPurchaseLineId[$i] = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line', 'create',array(array('name'=>$purchaseName,'date_planned'=>$now,'product_id'=>$arrDataCart[$i]['product_id'],'x_quality_product'=>$arrDataCart[$i]['quality'],'order_id'=>$purchase,'product_uom'=>1, 'product_qty'=>$arrDataCart[$i]['quantity'], 'qty_received'=>$arrDataCart[$i]['quantity'], 'price_unit'=>$arrDataCart[$i]['price'], 'x_barcode_id'=>$arrDataCartExt[$i]['barcode'], 'x_location'=>$arrDataCartExt[$i]['location'])));
         }
 
         $logger->info('ARR purchase'.var_export($purchase,true));	

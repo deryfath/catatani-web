@@ -55,6 +55,19 @@
                                         <!-- /.input group -->
                                       </div>   
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Tanggal Pembayaran :</label>
+
+                                        <div class="input-group">
+                                          <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                          </div>
+                                            <input type="text" id="date_payment_purchase" name="date_payment_purchase" class="form-control">
+                                        </div>
+                                        <!-- /.input group -->
+                                      </div>   
+                                </div>
                             </div>
                              
                         </div>
