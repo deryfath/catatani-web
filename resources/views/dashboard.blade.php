@@ -26,7 +26,7 @@
             <div class="inner">
               <h3 id="product_count">0</h3>
 
-              <p>Varian Produk</p>
+              <p>Total Produk</p>
             </div>
             <div class="icon">
               <i class="ion ion-cube"></i>
@@ -127,21 +127,19 @@
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
+                <!-- <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <h5 class="description-header">Rp 24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
+                    <h5 class="description-header"><span id="total_varian"> 0</span></h5>
+                    <span class="description-text">TOTAL VARIAN</span>
                   </div>
-                  <!-- /.description-block -->
-                </div>
+                </div> -->
                 <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
+                <!-- <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
                     <h5 class="description-header">1200</h5>
                     <span class="description-text">GOAL COMPLETIONS</span>
                   </div>
-                  <!-- /.description-block -->
-                </div>
+                </div> -->
               </div>
               <!-- /.row -->
             </div>
