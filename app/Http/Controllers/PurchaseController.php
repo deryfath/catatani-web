@@ -150,7 +150,7 @@ class PurchaseController extends Controller
         // Now add some handlers
         $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
 
-        $arrDataCart = $request->input('arr_product');
+        // $arrDataCart = $request->input('arr_product');
 
         $arrDataCartExt = $request->input('arr_product_ext');
 
@@ -171,7 +171,7 @@ class PurchaseController extends Controller
         $partner = explode(",",$arrDataCart[0]['vendor_name']);
         $partnerId = (int)$partner[0];
 
-
+        
 
         //PURCHASE
         $purchase = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order', 'create',array(array('partner_id'=>$partnerId,'state'=>'purchase','date_order'=>$date_order, 'x_payment_date'=>$date_payment)));

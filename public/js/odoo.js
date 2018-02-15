@@ -1370,6 +1370,9 @@ function getProductVendorPurchase(id){
 
 	var arrProduct = [];
 
+	var arrVendorIdUrl = [];
+	var arrProductTempIdUrl = [];
+
     $('#product_vendor_purchase').html("");
 
 	  $.ajax({
@@ -1406,6 +1409,9 @@ function getProductVendorPurchase(id){
 
 				}else{
 					for (var i = 0; i < result.data.length; i++) {
+
+						arrVendorIdUrl.push(result.data[i].id);
+						arrProductTempIdUrl.push(result.data[i].product_tmpl_id[0]);
 
 						var productVendorHtml =  '<div class="items col-sm-2 item-product-vendor-purchase" data-id="'+result.data[i].id+'">'+
 			                                        '<div class="info-block block-info clearfix">'+
@@ -1568,7 +1574,7 @@ function getProductVendorPurchase(id){
 				var Vid = $("#vendor_purchase option:selected").val();
 				console.log(VName);
 				console.log(Vid);
-				window.location.href="/edit/vendor/product?vendor_id="+Vid+"&vendor_name="+VName;
+				window.location.href="/choose/product?vendor_id="+Vid+"&vendor_name="+VName+"&vendor_product="+JSON.stringify(arrVendorIdUrl)+"&product="+JSON.stringify(arrProductTempIdUrl);
 			})
 
 			$('.add-vendor-purchase').unbind('click').click(function(){
@@ -1971,7 +1977,7 @@ function getDataPurchasePayment(){
 
 		            $.LoadingOverlay("hide");
 
-		            window.location.href="/purchase";
+		            // window.location.href="/purchase";
         	
 		            
 		          },

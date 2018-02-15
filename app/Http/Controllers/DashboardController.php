@@ -96,6 +96,19 @@ class DashboardController extends Controller
         $dataProduct = $models->execute_kw($this->db, $this->uid, $this->password,'product.product','search_read', array(),array('fields'=>array('id','qty_available','name')));
         $dataVendor = $data = $models->execute_kw($this->db, $this->uid, $this->password,'res.partner','search_read', array(array(array('supplier', '=', true))),array('fields'=>array('id')));
         
+        $dataStockProduct = $data = $models->execute_kw($this->db, $this->uid, $this->password,'stock.quant','search_read', array(),array());
+        
+        $arrStockProduct = array();
+
+        // for ($k=0; $k < count($dataProduct); $k++) { 
+            
+        //     for ($l=0; $l < count($dataStockProduct); $l++) { 
+        //        if($dataProduct[$k]['id']==$dataStockProduct[$l]['product_id']){
+        //            array_push(array, var)
+        //        }
+        //     }
+        // }
+
         $countTotalComodity = 0;
         for ($i=0; $i < count($dataProduct) ; $i++) { 
             $countTotalComodity = $countTotalComodity + $dataProduct[$i]['qty_available'];
@@ -108,7 +121,7 @@ class DashboardController extends Controller
 
         $logger->info('ARR amount '.$amountTotalPurchase);
 
-        array_push($varCount, count($dataPurchase),count($dataProduct),count($dataVendor),$countTotalComodity,$dataProduct,$amountTotalPurchase);
+        array_push($varCount, count($dataPurchase),count($dataProduct),count($dataVendor),$countTotalComodity,$dataProduct,$amountTotalPurchase,$dataStockProduct);
         return response()->json(array('data'=> $varCount), 200);
     }
 
