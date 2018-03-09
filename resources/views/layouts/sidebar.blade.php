@@ -39,6 +39,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('inventory/comodity') }}"><i class="fa fa-archive fa-fw"></i>Komoditas</a></li>
             <li><a href="{{ url('inventory/stock') }}"><i class="fa fa-cube fa-fw"></i>Stok Barang</a></li>
+            <li><a href="{{ url('inventory/check/stock') }}"><i class="fa fa-sign-in fa-fw"></i>Cek Barang Masuk</a></li>
           </ul>
         </li>
         <li class="treeview">

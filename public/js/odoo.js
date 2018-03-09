@@ -81,6 +81,10 @@ if(window.location.pathname== "/" ){
 }else if(window.location.pathname == "/inventory/stock"){
 
 	getDataStockInventory();
+
+}else if(window.location.pathname == "/inventory/check/stock"){
+
+	checkInventoryStock();
 }
 
 
@@ -1977,7 +1981,7 @@ function getDataPurchasePayment(){
 
 		            $.LoadingOverlay("hide");
 
-		            // window.location.href="/purchase";
+		            window.location.href="/purchase";
         	
 		            
 		          },
@@ -2472,6 +2476,128 @@ function getDataStockInventory(){
 
 		}
 	})
+}
+
+function checkInventoryStock(){
+
+	var htmlNotValid = '<img style="max-width: 70%;" src="/bower_components/AdminLTE/dist/img/cross-mark-on-a-black-circle-background.png" alt="">'+
+                    '<span style="font-size: 17px;font-weight: bolder;"> Tidak Valid</span>';
+ 	
+ 	var htmlValid = '<img style="max-width: 75%;" src="/bower_components/AdminLTE/dist/img/check-circular-button.png" alt="">'+
+                    '<span style="font-size: 17px;font-weight: bolder;display: block;"> Valid</span>';
+
+	// Remove button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+        function(e) {
+            e.preventDefault();
+            $(this).closest('.form-inline').remove();
+        }
+    );
+    // Add button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+        function(e) {
+            e.preventDefault();
+            var container = $(this).closest('[data-role="dynamic-fields"]');
+            new_field_group = container.children().filter('.form-inline:first-child').clone();
+            new_field_group.find('input').each(function(){
+                $(this).val('');
+            });
+            container.append(new_field_group);
+        }
+    );	
+
+
+	$('#searchStockCheck').click(function(){
+
+		 if(document.getElementById('stock_check_id').value==""|| document.getElementById('stock_check_quantity').value==""){
+
+		 	$("#modal_warning").modal();
+
+		 }else{
+
+
+		 	var dataSend = {
+
+			 	id : document.getElementById('stock_check_id').value
+			 }
+
+			 var qtyInput = document.getElementById('stock_check_quantity').value;
+					  	
+			 $('#check_status').html('');
+			 $.LoadingOverlay("show");
+
+			 setTimeout(function() {
+
+			 	 $.ajax({
+					  type: "POST",
+					  url: "/check/inventory/stock",
+					  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+							  
+					  data: JSON.stringify(dataSend),
+					  contentType: "application/json; charset=utf-8",
+					  dataType: "json",
+					  success: function(data){
+
+					  	$("#checkStockModal").modal();
+					  	console.log(data);
+
+					  	console.log(data.data[0].purchase_detail[0].product_qty);
+					  	console.log(parseInt(qtyInput));
+
+					  	if (parseInt(data.data[0].purchase_detail[0].product_qty)!=parseInt(qtyInput)) {
+					  		$('#check_status').html(htmlNotValid);
+					  	}else{
+					  		$('#check_status').html(htmlValid);
+					  	}
+
+					  	$.LoadingOverlay("hide");
+
+					  	$('#dataTables-detail-purchase-stock').DataTable( {
+		                    data: data.data[0].purchase_detail,
+		                     bDestroy: true,
+					        columns : [{
+					            "data" : "product_id.1"
+					        }, {
+					        	"data" : "price_unit"
+					        }, {
+					            "data" : "product_qty"
+					        }, {
+					            "data" : "price_subtotal"
+					        }]
+		                });
+
+		                var textSplit = data.data[0].display_name.split(": ");
+			       		var total = textSplit[1];
+			       		var orderID = textSplit[0];
+			       		$('#total_detail_purchase_stock').text(total);
+			       		$('#purchase_stock_detail_id').text(orderID);
+			       		$('#date_order_stock_detail').text(data.data[0].date_order);
+			       		$('#vendor_purchase_stock_detail').text(data.data[0].partner_id[1]); 
+
+				 },
+				  failure: function(errMsg) {
+				      alert(errMsg);
+				  }
+				});
+
+
+			 }, 100);
+		 }
+
+		 
+		 
+
+		
+				
+
+	})
+	
+
+
 }
 
 

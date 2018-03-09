@@ -294,5 +294,35 @@ class PurchaseController extends Controller
         return response()->json(array('data'=> $arrDetail), 200);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPurchaseInventory(Request $request){
+
+        $logger = new Logger('update_vendor_product');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        $id = $request->input('id');
+        
+        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+        $data = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order','search_read', array(array(array('name', '=', $id))),array());
+
+        $arrDetail = array();
+        for ($i=0; $i < count($data[0]['order_line']); $i++) { 
+            
+            $dataDetail = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order.line','search_read', array(array(array('id', '=', $data[0]['order_line'][$i]))),array());
+            
+            array_push($arrDetail, $dataDetail[0]);
+            
+            $data[$i]['purchase_detail'] = $arrDetail;
+        }
+
+        return response()->json(array('data'=> $data), 200);
+    }
+
 
 }
