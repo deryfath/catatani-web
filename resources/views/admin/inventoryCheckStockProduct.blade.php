@@ -87,7 +87,7 @@
                 <h4 class="modal-title">Notifikasi</h4>
               </div>
               <div class="modal-body">
-                <p>Harap isi Field secara lengkap</p>
+                <p>Pembelian Tidak Ditemukan</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

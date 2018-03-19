@@ -195,3 +195,5 @@
 [2018-03-19 04:33:14] get_connect_2.INFO: 1 [] []
 [2018-03-19 04:34:26] get_connect_2.INFO: 1 [] []
 [2018-03-19 04:34:46] get_connect_2.INFO: 1 [] []
+[2018-03-19 06:00:35] dashboard.INFO: 1 [] []
+[2018-03-19 06:00:36] dashboard_count.INFO: ARR amount 153536807 [] []
