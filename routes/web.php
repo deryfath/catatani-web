@@ -142,6 +142,10 @@ Route::get('/inventory/check/stock', function () {
     return View::make('admin.inventoryCheckStockProduct');
 })->middleware('auth');
 
+Route::get('/inventory/check/stock/list', function () {
+    return View::make('admin.inventoryCheckStockProductList');
+})->middleware('auth');
+
 Route::post('/inventory/comodity/item', 'InventoryController@dataProductByItem');
 
 Route::get('/get/inventory/comodity/item', 'InventoryController@getDataProductByItem');
@@ -155,6 +159,8 @@ Route::post('/update/inventory/process', 'InventoryController@updateProductInven
 Route::post('/update/inventory/result', 'InventoryController@updateProductInventoryResult');
 
 Route::post('/check/inventory/stock', 'PurchaseController@checkPurchaseInventory');
+
+Route::post('/update/inventory/check', 'PurchaseController@updatePurchaseInventory');
 
 Route::get('/inventory/stock', function () {
     return View::make('admin.inventoryStockProduct');

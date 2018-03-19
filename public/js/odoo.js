@@ -85,6 +85,9 @@ if(window.location.pathname== "/" ){
 }else if(window.location.pathname == "/inventory/check/stock"){
 
 	checkInventoryStock();
+}else if(window.location.pathname == "/inventory/check/stock/list"){
+
+	getInventoryCheckList();
 }
 
 
@@ -2513,83 +2516,17 @@ function checkInventoryStock(){
 
 	$('#searchStockCheck').click(function(){
 
-		 if(document.getElementById('stock_check_id').value==""|| document.getElementById('stock_check_quantity').value==""){
-
-		 	$("#modal_warning").modal();
-
-		 }else{
-
-
-		 	var dataSend = {
-
-			 	id : document.getElementById('stock_check_id').value
-			 }
-
-			 var qtyInput = document.getElementById('stock_check_quantity').value;
+			 var id = document.getElementById('stock_check_id').value
 					  	
 			 $('#check_status').html('');
 			 $.LoadingOverlay("show");
 
 			 setTimeout(function() {
 
-			 	 $.ajax({
-					  type: "POST",
-					  url: "/check/inventory/stock",
-					  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
-							  
-					  data: JSON.stringify(dataSend),
-					  contentType: "application/json; charset=utf-8",
-					  dataType: "json",
-					  success: function(data){
-
-					  	$("#checkStockModal").modal();
-					  	console.log(data);
-
-					  	console.log(data.data[0].purchase_detail[0].product_qty);
-					  	console.log(parseInt(qtyInput));
-
-					  	if (parseInt(data.data[0].purchase_detail[0].product_qty)!=parseInt(qtyInput)) {
-					  		$('#check_status').html(htmlNotValid);
-					  	}else{
-					  		$('#check_status').html(htmlValid);
-					  	}
-
-					  	$.LoadingOverlay("hide");
-
-					  	$('#dataTables-detail-purchase-stock').DataTable( {
-		                    data: data.data[0].purchase_detail,
-		                     bDestroy: true,
-					        columns : [{
-					            "data" : "product_id.1"
-					        }, {
-					        	"data" : "price_unit"
-					        }, {
-					            "data" : "product_qty"
-					        }, {
-					            "data" : "price_subtotal"
-					        }]
-		                });
-
-		                var textSplit = data.data[0].display_name.split(": ");
-			       		var total = textSplit[1];
-			       		var orderID = textSplit[0];
-			       		$('#total_detail_purchase_stock').text(total);
-			       		$('#purchase_stock_detail_id').text(orderID);
-			       		$('#date_order_stock_detail').text(data.data[0].date_order);
-			       		$('#vendor_purchase_stock_detail').text(data.data[0].partner_id[1]); 
-
-				 },
-				  failure: function(errMsg) {
-				      alert(errMsg);
-				  }
-				});
+			 	window.location.href="/inventory/check/stock/list?purchase_id="+id;
 
 
 			 }, 100);
-		 }
-
-		 
-		 
 
 		
 				
@@ -2598,6 +2535,152 @@ function checkInventoryStock(){
 	
 
 
+}
+
+function getInventoryCheckList(){
+
+	var purchaseId = getParameterByName('purchase_id');
+
+	var dataSend = {
+
+		id : purchaseId
+	}
+
+	console.log(dataSend);
+
+	setTimeout(function() {
+
+		$.ajax({
+			  type: "POST",
+			  url: "/check/inventory/stock",
+			  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+					  
+			  data: JSON.stringify(dataSend),
+			  contentType: "application/json; charset=utf-8",
+			  dataType: "json",
+			  success: function(data){
+
+			  	console.log(data);
+
+			  	$.LoadingOverlay("hide");
+
+			  	$('#dataTables-detail-purchase-stock').DataTable( {
+                    data: data.data[0].purchase_detail,
+                    responsive : true,
+			        paging:   false,
+		        	ordering: false,
+		        	info:     false,
+		        	searching: false,
+			        columns : [{
+			            "data" : "product_id.1"
+			        }, {
+			        	"data" : "price_unit"
+			        }, {
+			            "data" : "product_qty"
+			        }, {
+			            "data" : "price_subtotal"
+			        }, {
+			            "data" : "action"
+			        }]
+                });
+
+                var textSplit = data.data[0].display_name.split(": ");
+	       		var total = textSplit[1];
+	       		var orderID = textSplit[0];
+	       		$('#total_detail_purchase_stock').text(total);
+	       		$('#purchase_stock_detail_id').text(orderID);
+	       		$('#date_order_stock_detail').text(data.data[0].date_order);
+	       		$('#vendor_purchase_stock_detail').text(data.data[0].partner_id[1]);
+
+	       		$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+		               
+				   	$("#success-alert").slideUp(500);
+
+				});  
+
+	       		$('#dataTables-detail-purchase-stock').on('click', '.edit-purchase-detail', function(){
+
+	       			$('#checkStockModal').modal('show');
+	       			var id = $(this).data('id');
+	       			var nameProduct = $(this).data('productname');
+	       			var ratingProduct = $(this).data('rating');
+	       			var imageProduct = $(this).data('productimage');
+	       			var imagePackage = $(this).data('packageimage');
+	       			var qtyProduct = $(this).data('qty');
+
+	       			$('#product_title_detail').text(nameProduct);
+	       			$('#quantity_product_detail').text(qtyProduct);
+
+	       			if (imageProduct!=false) {
+	       				document.getElementById('image_product_detail').src= imageProduct;
+	       			}else{
+	       				document.getElementById('image_product_detail').src= "http://placehold.it/200x200";
+	       			}
+
+	       			if (imagePackage!=false) {
+	       				document.getElementById('image_package_detail').src= imagePackage;
+	       			}else{
+	       				document.getElementById('image_package_detail').src= "http://placehold.it/200x200";
+	       			}
+
+	       // 			//RATING
+				    // var stars = $('#stars li').parent().children('li.star');
+				    
+				    // for (i = 0; i < ratingProduct; i++) {
+				    //   $(stars[i]).addClass('selected');
+				    // }
+
+		      //       ratingStarEvent();
+	       			
+	       			console.log(ratingProduct);
+
+	       			$('#submit_check_stock').unbind('click').click(function(){
+	       				$.LoadingOverlay("show");
+	       				qtyDiff = parseInt(document.getElementById('quantity_product_after_detail').value) - qtyProduct
+
+	       				var dataSend = {
+
+	       					id : id,
+	       					qty_diff : Math.abs(qtyDiff),
+	       					quality_note : document.getElementById('quality_product_after_detail').value
+
+	       				}
+
+	       				console.log(dataSend);
+
+	       				$.ajax({
+						  type: "POST",
+						  url: "/update/inventory/check",
+						  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+						  // The key needs to match your method's input parameter (case-sensitive).
+						  data: JSON.stringify(dataSend),
+						  contentType: "application/json; charset=utf-8",
+						  dataType: "json",
+						  success: function(data){
+
+						  	console.log(data);
+						  	location.reload();
+						  	$.LoadingOverlay("hide");
+
+
+						 },
+						  failure: function(errMsg) {
+						      alert(errMsg);
+						  }
+						});
+
+
+	       			})
+
+	       		})
+
+		 },
+		  failure: function(errMsg) {
+		      alert(errMsg);
+		  }
+		});
+
+	}, 100);
 }
 
 
