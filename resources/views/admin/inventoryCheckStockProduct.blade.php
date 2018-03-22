@@ -30,42 +30,39 @@
                         
                          <div class="panel-body">
 
-                                <div class="form-group">
-                                    <label for="name">ID Pembelian</label>
-                                    <input type="text" id="stock_check_id" class="form-control" required>
-                                </div>
-                                <div class="form-group" style="display:none;">
-                                    <label for="vendor_farm">Kuantitas Setelah Ditimbang (Kg)</label>
-                                    <input type="text" id="stock_check_quantity" class="form-control" required>
-                                </div>
-                                <div class="form-group" style="display:none;">
-                                    
-                                </style>>
-                                  <label >Kuantitas Setelah Ditimbang (Kg)</label>
+                           <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Cari Berdasarkan ID Pembelian</a></li>
+                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cari Berdasarkan Agen Pembeli</a></li>
+                            </ul>
 
-                                   <div data-role="dynamic-fields">
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="field-name">Nama Komoditas</label>
-                                            <input type="text" class="form-control" id="comodity_name_purchase" placeholder="Nama Komoditas">
-                                        </div>
-                                        <span>-</span>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="field-value">Kuantitas</label>
-                                            <input type="text" class="form-control" id="quantity_purchase" placeholder="Kuantitas(Kg)">
-                                        </div>
-                                        <button class="btn btn-danger" data-role="remove">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <button class="btn btn-primary" data-role="add">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                    </div>  
-                                   </div>  
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="home">
+                                    <div class="form-group">
+                                        <label for="name">Masukan ID pembelian</label>
+                                        <input type="text" id="stock_check_id" class="form-control" style="width: 29%;" required>
+                                    </div>
+                                    
+                                    <div class="form-group" style="    margin-top: 16px;">
+                                        <button  id="searchStockCheck" class="btn btn-primary" >Cek</button>
+                                    </div>
                                 </div>
-                                <div class="form-group" style="    margin-top: 16px;">
-                                    <button  id="searchStockCheck" class="btn btn-primary" >Cek</button>
+                                <div role="tabpanel" class="tab-pane" id="profile">
+                                    <div class="form-group">
+                                        <label for="name">Pilih Agen</label>
+                                        <select id="vendor_purchase_inventory" class="form-control" style="width: 24%;">
+                                          
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group" style="    margin-top: 16px;">
+                                        <button  id="searchStockVendorCheck" class="btn btn-primary" >Cek</button>
+                                    </div>
+
                                 </div>
+                                
+                            </div>
+
+                                
                         </div>
 
                     </div>

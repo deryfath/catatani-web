@@ -319,7 +319,7 @@ class PurchaseController extends Controller
                 $dataDetail[0]['action'] = 'Stok barang telah Dicek';
 
             }else{
-                $dataDetail[0]['action'] = '<button style="margin-right:10px;" data-id="'.$dataDetail[0]['id'].'" data-rating="'.$dataDetail[0]['x_quality_product'].'" data-packageimage="'.$dataDetail[0]['x_image_package'].'" data-productimage="'.$dataDetail[0]['x_image_product'].'" data-productname="'.$dataDetail[0]['product_id'][1].'" data-qty="'.$dataDetail[0]['product_qty'].'" class="btn btn-xs btn-primary edit-purchase-detail"><i class="glyphicon glyphicon-edit"></i> Cek</button>';
+                $dataDetail[0]['action'] = '<button style="margin-right:10px;" data-purchaseid="'.$data[0]['id'].'" data-id="'.$dataDetail[0]['id'].'" data-rating="'.$dataDetail[0]['x_quality_product'].'" data-packageimage="'.$dataDetail[0]['x_image_package'].'" data-productimage="'.$dataDetail[0]['x_image_product'].'" data-productname="'.$dataDetail[0]['product_id'][1].'" data-qty="'.$dataDetail[0]['product_qty'].'" class="btn btn-xs btn-primary edit-purchase-detail"><i class="glyphicon glyphicon-edit"></i> Cek Komoditas</button>';
 
             }
             
@@ -330,6 +330,35 @@ class PurchaseController extends Controller
             
         }
 
+        return response()->json(array('data'=> $data), 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPurchaseInventoryVendor(Request $request){
+
+        $logger = new Logger('update_vendor_product');
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
+
+        $id = $request->input('id');
+        
+        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+        $data = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order','search_read', array(array(array('x_agent_buyer', '=', $id))),array());
+        
+        for ($i=0; $i < count($data); $i++) { 
+            $data[$i]['action'] = '<button style="margin-right:10px;" data-id="'.$data[$i]['name'].'"  class="btn btn-xs btn-primary edit-purchase-vendor-detail"><i class="glyphicon glyphicon-edit"></i> Detail</button>';
+            if($data[$i]['x_checked_status']){
+                $data[$i]['purchase_status'] = "Telah Dicek";
+            }else{
+                $data[$i]['purchase_status'] = "Menunggu Pengecekan"; 
+            }
+        }
+         
         return response()->json(array('data'=> $data), 200);
     }
 
@@ -346,11 +375,13 @@ class PurchaseController extends Controller
         // Now add some handlers
         $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
 
+        $purchaseId = $request->input('purchase_id');
         $id = $request->input('id');
         $qtyDiff = $request->input('qty_diff');
         $qualityNote = $request->input('quality_note');
         
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
+        $response = $models->execute_kw($this->db, $this->uid, $this->password, 'purchase.order', 'write',array(array($purchaseId), array('x_checked_status'=>true)));
         $response = $models->execute_kw($this->db, $this->uid, $this->password, 'purchase.order.line', 'write',array(array($id), array('x_diff_quantity'=>$qtyDiff,'x_comment'=>$qualityNote,'x_checked'=>true)));
 
         $request->session()->flash('status', 'Stok Komoditas Berhasil Dicek!');

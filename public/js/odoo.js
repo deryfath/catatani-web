@@ -88,6 +88,10 @@ if(window.location.pathname== "/" ){
 }else if(window.location.pathname == "/inventory/check/stock/list"){
 
 	getInventoryCheckList();
+
+}else if(window.location.pathname == "/inventory/check/vendor/stock"){
+
+	getInventoryVendorCheckList();
 }
 
 
@@ -1185,6 +1189,7 @@ function getPurchaseList(){
 	$(document).ready(function() {
 	    $('#dataTables-purchase').DataTable({
 	        responsive : true,
+	        order: [[ 0, "desc" ]],
 	        ajax : {
 	            "url" : "/get/purchase/order"
 	        },
@@ -2516,9 +2521,10 @@ function checkInventoryStock(){
 
 	$('#searchStockCheck').click(function(){
 
-			 var id = document.getElementById('stock_check_id').value
+			 var id = document.getElementById('stock_check_id').value;
+
+			 id = id.toUpperCase();
 					  	
-			 $('#check_status').html('');
 			 $.LoadingOverlay("show");
 
 			 setTimeout(function() {
@@ -2532,9 +2538,123 @@ function checkInventoryStock(){
 				
 
 	})
+
+	//get agent purchase
+	$.ajax({
+       type:'GET',
+       url:'/get/agent',
+       // async: true,
+       success:function(data){ 		
+
+ 			//get vendor
+       		console.log(data);
+       		var result = data;
+       		var vendorListSelect = document.getElementById('vendor_purchase_inventory');
+
+       		$('#vendor_purchase_inventory').val(result.data[0].id);
+
+       		console.log(result.data[0].id);
+
+       		for (var i = 0; i<result.data.length; i++){
+			    var opt = document.createElement('option');
+			    opt.value = result.data[i].id;
+			    opt.innerHTML = result.data[i].x_name;
+			    vendorListSelect.appendChild(opt);
+			}
+		}
+	})
+
+	$('#searchStockVendorCheck').click(function(){
+
+			 var id = $('#vendor_purchase_inventory').val();
+			 var name = $('#vendor_purchase_inventory :selected').text();
+
+			 console.log(id);
+
+			$.LoadingOverlay("show");
+
+			 setTimeout(function() {
+
+			 	window.location.href="/inventory/check/vendor/stock?vendor_id="+id+"&vendor_name="+name;
+
+
+			 }, 100);
+
+		
+				
+
+	})
 	
 
 
+}
+
+function getInventoryVendorCheckList(){
+
+	var vendorId = getParameterByName('vendor_id');
+	var vendorName = getParameterByName('vendor_name');
+
+	var dataSend = {
+
+		id : parseInt(vendorId)
+	}
+
+	console.log(dataSend);
+
+	setTimeout(function() {
+
+		$.ajax({
+			  type: "POST",
+			  url: "/check/inventory/vendor/stock",
+			  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+					  
+			  data: JSON.stringify(dataSend),
+			  contentType: "application/json; charset=utf-8",
+			  dataType: "json",
+			  success: function(data){
+
+			  	console.log(data);
+
+			  	$('#vendor_title').text(vendorName);
+
+			  	$.LoadingOverlay("hide");
+
+			  	$('#dataTables-purchase-inventory-vendor').DataTable( {
+                    data: data.data,
+                    order: [[ 0, "desc" ]],
+			        columns : [{
+			            "data" : "name"
+			        }, {
+			        	"data" : "create_date"
+			        }, {
+			            "data" : "amount_total"
+			        }, {
+			            "data" : "purchase_status"
+			        }, {
+			            "data" : "action"
+			        }]
+                });
+
+                $('#dataTables-purchase-inventory-vendor').on('click', '.edit-purchase-vendor-detail', function(){
+
+                	console.log('test');
+
+                	var id = $(this).data('id');
+                	$.LoadingOverlay("show");
+
+					 setTimeout(function() {
+
+					 	window.location.href="/inventory/check/stock/list?purchase_id="+id;
+
+
+					 }, 100);
+
+                })
+
+			  }
+		})
+
+    }, 100);
 }
 
 function getInventoryCheckList(){
@@ -2587,6 +2707,7 @@ function getInventoryCheckList(){
                 var textSplit = data.data[0].display_name.split(": ");
 	       		var total = textSplit[1];
 	       		var orderID = textSplit[0];
+
 	       		$('#total_detail_purchase_stock').text(total);
 	       		$('#purchase_stock_detail_id').text(orderID);
 	       		$('#date_order_stock_detail').text(data.data[0].date_order);
@@ -2598,9 +2719,12 @@ function getInventoryCheckList(){
 
 				});  
 
+				
+
 	       		$('#dataTables-detail-purchase-stock').on('click', '.edit-purchase-detail', function(){
 
 	       			$('#checkStockModal').modal('show');
+	       			var purchaseId = $(this).data('purchaseid');
 	       			var id = $(this).data('id');
 	       			var nameProduct = $(this).data('productname');
 	       			var ratingProduct = $(this).data('rating');
@@ -2611,8 +2735,14 @@ function getInventoryCheckList(){
 	       			$('#product_title_detail').text(nameProduct);
 	       			$('#quantity_product_detail').text(qtyProduct);
 
+	       			$('.tabbar-check').removeClass("active");
+	       			$('#check_image_product').parent().addClass("active");
+	       			$('#checkImageProduct').addClass("active");
+	       			$('#progressCheck').css("width","45%");
+
 	       			if (imageProduct!=false) {
 	       				document.getElementById('image_product_detail').src= imageProduct;
+						
 	       			}else{
 	       				document.getElementById('image_product_detail').src= "http://placehold.it/200x200";
 	       			}
@@ -2622,27 +2752,46 @@ function getInventoryCheckList(){
 	       			}else{
 	       				document.getElementById('image_package_detail').src= "http://placehold.it/200x200";
 	       			}
-
-	       // 			//RATING
-				    // var stars = $('#stars li').parent().children('li.star');
-				    
-				    // for (i = 0; i < ratingProduct; i++) {
-				    //   $(stars[i]).addClass('selected');
-				    // }
-
-		      //       ratingStarEvent();
 	       			
-	       			console.log(ratingProduct);
+	       			$('#check_image_product').click(function(){
+
+	       				$('#progressCheck').css("width","45%");
+	       			})
+
+	       			$('#check_image_package').click(function(){
+
+	       				$('#progressCheck').css("width","80%");
+	       			})
+
+	       			$('#check_quantity').click(function(){
+
+	       				$('#progressCheck').css("width","100%");
+	       			})
+
+	       			$('#form_radio input').on('change', function() {
+					   if ($('input[name=quality_product_after_detail]:checked', '#form_radio').val()=="option4") {
+					   	  $("#div_other").css("display","block");
+					   }else{
+					   	  $("#div_other").css("display","none");
+					   }
+					});
 
 	       			$('#submit_check_stock').unbind('click').click(function(){
 	       				$.LoadingOverlay("show");
 	       				qtyDiff = parseInt(document.getElementById('quantity_product_after_detail').value) - qtyProduct
+	       				var selectedQuality = "";
+	       				if ($('input[name=quality_product_after_detail]:checked').val()=="option4") {
+	       					selectedQuality = document.getElementById('other_value_quality').value;
+	       				}else{
+	       					selectedQuality = $('input[name=quality_product_after_detail]:checked').val();
+	       				}
 
 	       				var dataSend = {
 
+	       					purchase_id : purchaseId,
 	       					id : id,
 	       					qty_diff : Math.abs(qtyDiff),
-	       					quality_note : document.getElementById('quality_product_after_detail').value
+	       					quality_note : selectedQuality
 
 	       				}
 

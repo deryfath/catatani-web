@@ -107,61 +107,76 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Cek Stok Komoditas <span id="product_title_detail"></span></h4>
           </div>
-          <div class="modal-body">
-
-               
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Kuantitas Produk : <span id="quantity_product_detail"></span> Kg</label>
-                </div>
-                <div class="row" style="margin-bottom: 22px;">
-                  <div class="col-md-6" style="text-align: center;">
-                    <label style="width: 100%;" for="exampleInputEmail1">Foto Produk  </label>
-                    <img id="image_product_detail" alt="">
-                  </div>
-                  <div class="col-md-6" style="text-align: center;">
-                    <label style="width: 100%;" for="exampleInputEmail1">Foto Kemasan</label>
-                    <img id="image_package_detail" alt="">
+          <div class="modal-body">                
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="tabbar-check" role="presentation" class="active"><a href="#checkImageProduct" id="check_image_product" aria-controls="home" role="tab" data-toggle="tab">1. Cek Komoditas</a></li>
+                    <li class="tabbar-check" role="presentation"><a href="#checkImagePackage" id="check_image_package" aria-controls="profile" role="tab" data-toggle="tab">2. Cek Kemasan</a></li>
+                    <li class="tabbar-check" role="presentation"><a href="#checkQuantity" id="check_quantity" aria-controls="profile" role="tab" data-toggle="tab">3. Cek Kuantitas</a></li>
+                </ul>
+                <div class="progress active" style="margin-top: 10px;margin-bottom: -16px;">
+                  <div class="progress-bar progress-bar-success progress-bar-striped" id="progressCheck" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                    <span class="sr-only"></span>
                   </div>
                 </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Kuantitas Produk Setelah penimbangan (Kg)</label>
-                      <input type="text" class="form-control" id="quantity_product_after_detail">
+                
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="checkImageProduct">
+                        <img src="" id="image_product_detail" style="width: 100%;">
                     </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Catatan Kualitas</label>
-                      <input type="text" class="form-control" id="quality_product_after_detail">
+                    <div role="tabpanel" class="tab-pane" id="checkImagePackage">
+                        <img id="image_package_detail" alt="" style="width: 100%;">
                     </div>
-
-                    <!-- <div class="form-group" style="text-align: center;">
-                        <label for="address">Kualitas Produk setelah penimbangan</label>
-                          <div class='rating-stars text-center'>
-                            <ul id='stars'>
-                              <li class='star' title='Poor' data-value='1'>
-                                <i class='fa fa-star fa-fw'></i>
-                              </li>
-                              <li class='star' title='Fair' data-value='2'>
-                                <i class='fa fa-star fa-fw'></i>
-                              </li>
-                              <li class='star' title='Good' data-value='3'>
-                                <i class='fa fa-star fa-fw'></i>
-                              </li>
-                              <li class='star' title='Excellent' data-value='4'>
-                                <i class='fa fa-star fa-fw'></i>
-                              </li>
-                              <li class='star' title='WOW!!!' data-value='5'>
-                                <i class='fa fa-star fa-fw'></i>
-                              </li>
-                            </ul>
+                    <div role="tabpanel" class="tab-pane" id="checkQuantity">
+                        <div class="form-group">
+                        <label>Kuantitas : <span id="quantity_product_detail"></span> Kg</label>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Kuantitas Produk Setelah penimbangan (Kg)</label>
+                          <input type="text" class="form-control" id="quantity_product_after_detail">
+                        </div>
+                        <div class="form-group" id="form_radio">
+                          <label for="exampleInputEmail1">Catatan Kualitas</label>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="quality_product_after_detail" id="optionsRadios1" value="Biji Jagung Hancur" checked="">
+                              Biji Jagung Hancur
+                            </label>
                           </div>
-                    </div> -->
-                  
-                  
-                 
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="quality_product_after_detail" id="optionsRadios2" value="Biji Kopi Tidak Bagus">
+                              Biji Kopi Tidak Bagus
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="quality_product_after_detail" id="optionsRadios3" value="Biji Kopi Kering">
+                              Biji Kopi Kering
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="quality_product_after_detail" id="optionsRadios4" value="option4">
+                              Lainnya
+                            </label>
+                          </div>
+                        </div>
+                        <div class="form-group" id="div_other" style="display:none;">
+                          <input type="text" class="form-control" id="other_value_quality">
+                        </div>
+                        <div class="form-group">
+                           <button  class="btn btn-primary" id="submit_check_stock">Submit</button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                    
                 
           </div>
 
           <div class="modal-footer">
-                <button  class="btn btn-primary" id="submit_check_stock">Submit</button>
+               
                 <button  class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
          
