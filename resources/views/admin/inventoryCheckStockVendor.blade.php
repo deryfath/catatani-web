@@ -26,7 +26,7 @@
               <div class="box-body">
                  <div class="row">
                     <div class="col-sm-12">
-
+                        
                      
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-purchase-inventory-vendor">
@@ -35,7 +35,7 @@
                                         <th>Reference</th>
                                         <th>Order Date</th>
                                         <th>Total</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>

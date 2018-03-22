@@ -30,16 +30,15 @@
                         
                          <div class="panel-body">
 
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Komoditas</a></li>
-                                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Proses</a></li>
-                                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Hasil</a></li>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Komoditas</a></li>
+                                      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Proses</a></li>
+                                      <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Hasil</a></li>
                                     </ul>
-
-                                    <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="home" >
-                                            <table width="100%" class="table table-striped table-bordered table-hover table-inventory" id="dataTables-inventory-comodity">
+                                      <div class="tab-pane active" id="tab_1">
+                                          <table width="100%" class="table table-striped table-bordered table-hover table-inventory" id="dataTables-inventory-comodity">
                                                 <thead>
                                                     <tr>
                                                         <th>Tanggal Pembelian</th>
@@ -53,10 +52,10 @@
                                                 </thead>
                                                 
                                             </table>
-
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="profile">
-                                          <table width="100%" class="table table-striped table-bordered table-hover table-inventory-process" id="dataTables-inventory-comodity-process">
+                                      </div>
+                                       <!-- /.tab-pane -->
+                                       <div class="tab-pane" id="tab_2">
+                                            <table width="100%" class="table table-striped table-bordered table-hover table-inventory-process" id="dataTables-inventory-comodity-process">
                                                 <thead>
                                                     <tr>
                                                         <th>Jumlah Awal (Kg)</th>
@@ -69,9 +68,9 @@
                                                 </thead>
                                                 
                                             </table>
+                                      </div>
 
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="messages">
+                                      <div class="tab-pane" id="tab_3">
                                             <table width="100%" class="table table-striped table-bordered table-hover table-inventory-result" id="dataTables-inventory-comodity-result">
                                                 <thead>
                                                     <tr>
@@ -87,9 +86,12 @@
                                                 </thead>
                                                 
                                             </table>
-                                            
-                                        </div>
+                                      </div>
+                                     
+                                      <!-- /.tab-pane -->
                                     </div>
+                                    <!-- /.tab-content -->
+                                  </div>
                             
                         </div>
 

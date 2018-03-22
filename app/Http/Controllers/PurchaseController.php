@@ -348,15 +348,15 @@ class PurchaseController extends Controller
         $id = $request->input('id');
         
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $data = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order','search_read', array(array(array('x_agent_buyer', '=', $id))),array());
+        $data = $models->execute_kw($this->db, $this->uid, $this->password,'purchase.order','search_read', array(array(array('x_agent_buyer', '=', $id),array('x_checked_status', '=', false))),array());
         
         for ($i=0; $i < count($data); $i++) { 
             $data[$i]['action'] = '<button style="margin-right:10px;" data-id="'.$data[$i]['name'].'"  class="btn btn-xs btn-primary edit-purchase-vendor-detail"><i class="glyphicon glyphicon-edit"></i> Detail</button>';
-            if($data[$i]['x_checked_status']){
-                $data[$i]['purchase_status'] = "Telah Dicek";
-            }else{
-                $data[$i]['purchase_status'] = "Menunggu Pengecekan"; 
-            }
+            // if($data[$i]['x_checked_status']){
+            //     $data[$i]['purchase_status'] = "Telah Dicek";
+            // }else{
+            //     $data[$i]['purchase_status'] = "Menunggu Pengecekan"; 
+            // }
         }
          
         return response()->json(array('data'=> $data), 200);
@@ -384,7 +384,7 @@ class PurchaseController extends Controller
         $response = $models->execute_kw($this->db, $this->uid, $this->password, 'purchase.order', 'write',array(array($purchaseId), array('x_checked_status'=>true)));
         $response = $models->execute_kw($this->db, $this->uid, $this->password, 'purchase.order.line', 'write',array(array($id), array('x_diff_quantity'=>$qtyDiff,'x_comment'=>$qualityNote,'x_checked'=>true)));
 
-        $request->session()->flash('status', 'Stok Komoditas Berhasil Dicek!');
+        $request->session()->flash('status', 'Pengecekan Komoditas Berhasil!');
         return response()->json(array('data'=> $response), 200);
     }
 

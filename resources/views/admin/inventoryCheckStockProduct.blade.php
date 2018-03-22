@@ -30,14 +30,14 @@
                         
                          <div class="panel-body">
 
-                           <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Cari Berdasarkan ID Pembelian</a></li>
-                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cari Berdasarkan Agen Pembeli</a></li>
+                          <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                              <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Cari Berdasarkan ID Pembelian</a></li>
+                              <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Cari Berdasarkan Agen Pembeli</a></li>
                             </ul>
-
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="home">
-                                    <div class="form-group">
+                              <div class="tab-pane active" id="tab_1">
+                                   <div class="form-group">
                                         <label for="name">Masukan ID pembelian</label>
                                         <input type="text" id="stock_check_id" class="form-control" style="width: 29%;" required>
                                     </div>
@@ -45,8 +45,9 @@
                                     <div class="form-group" style="    margin-top: 16px;">
                                         <button  id="searchStockCheck" class="btn btn-primary" >Cek</button>
                                     </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="profile">
+                              </div>
+                               <!-- /.tab-pane -->
+                               <div class="tab-pane" id="tab_2">
                                     <div class="form-group">
                                         <label for="name">Pilih Agen</label>
                                         <select id="vendor_purchase_inventory" class="form-control" style="width: 24%;">
@@ -57,10 +58,14 @@
                                     <div class="form-group" style="    margin-top: 16px;">
                                         <button  id="searchStockVendorCheck" class="btn btn-primary" >Cek</button>
                                     </div>
-
-                                </div>
-                                
+                              </div>
+                             
+                              <!-- /.tab-pane -->
                             </div>
+                            <!-- /.tab-content -->
+                          </div>
+
+                           
 
                                 
                         </div>

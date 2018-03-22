@@ -2488,36 +2488,6 @@ function getDataStockInventory(){
 
 function checkInventoryStock(){
 
-	var htmlNotValid = '<img style="max-width: 70%;" src="/bower_components/AdminLTE/dist/img/cross-mark-on-a-black-circle-background.png" alt="">'+
-                    '<span style="font-size: 17px;font-weight: bolder;"> Tidak Valid</span>';
- 	
- 	var htmlValid = '<img style="max-width: 75%;" src="/bower_components/AdminLTE/dist/img/check-circular-button.png" alt="">'+
-                    '<span style="font-size: 17px;font-weight: bolder;display: block;"> Valid</span>';
-
-	// Remove button click
-    $(document).on(
-        'click',
-        '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
-        function(e) {
-            e.preventDefault();
-            $(this).closest('.form-inline').remove();
-        }
-    );
-    // Add button click
-    $(document).on(
-        'click',
-        '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
-        function(e) {
-            e.preventDefault();
-            var container = $(this).closest('[data-role="dynamic-fields"]');
-            new_field_group = container.children().filter('.form-inline:first-child').clone();
-            new_field_group.find('input').each(function(){
-                $(this).val('');
-            });
-            container.append(new_field_group);
-        }
-    );	
-
 
 	$('#searchStockCheck').click(function(){
 
@@ -2628,8 +2598,8 @@ function getInventoryVendorCheckList(){
 			        	"data" : "create_date"
 			        }, {
 			            "data" : "amount_total"
-			        }, {
-			            "data" : "purchase_status"
+			        // }, {
+			        //     "data" : "purchase_status"
 			        }, {
 			            "data" : "action"
 			        }]
@@ -2644,7 +2614,7 @@ function getInventoryVendorCheckList(){
 
 					 setTimeout(function() {
 
-					 	window.location.href="/inventory/check/stock/list?purchase_id="+id;
+					 	window.location.href="/inventory/check/stock/list?purchase_id="+id+"&vendor_id="+vendorId+"&vendor_name="+vendorName;
 
 
 					 }, 100);
@@ -2660,6 +2630,8 @@ function getInventoryVendorCheckList(){
 function getInventoryCheckList(){
 
 	var purchaseId = getParameterByName('purchase_id');
+	var vendorId = getParameterByName('vendor_id');
+	var vendorName = getParameterByName('vendor_name');
 
 	var dataSend = {
 
@@ -2713,17 +2685,17 @@ function getInventoryCheckList(){
 	       		$('#date_order_stock_detail').text(data.data[0].date_order);
 	       		$('#vendor_purchase_stock_detail').text(data.data[0].partner_id[1]);
 
-	       		$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+				$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
 		               
 				   	$("#success-alert").slideUp(500);
 
 				});  
 
-				
 
 	       		$('#dataTables-detail-purchase-stock').on('click', '.edit-purchase-detail', function(){
 
 	       			$('#checkStockModal').modal('show');
+	       			smartStepWizard();
 	       			var purchaseId = $(this).data('purchaseid');
 	       			var id = $(this).data('id');
 	       			var nameProduct = $(this).data('productname');
@@ -2752,23 +2724,30 @@ function getInventoryCheckList(){
 	       			}else{
 	       				document.getElementById('image_package_detail').src= "http://placehold.it/200x200";
 	       			}
-	       			
-	       			$('#check_image_product').click(function(){
 
-	       				$('#progressCheck').css("width","45%");
+	       			$('#form_radio_comodity input').on('change', function() {
+
+	       			   if ($('input[name=quality_image_product_after_detail]:checked', '#form_radio_comodity').val()=="option4") {
+					   	  $("#div_image_comodity_other").css("display","block");
+					   }else{
+					   	  $("#div_image_comodity_other").css("display","none");
+					   }
+
 	       			})
 
-	       			$('#check_image_package').click(function(){
+	       			$('#form_radio_package input').on('change', function() {
 
-	       				$('#progressCheck').css("width","80%");
+	       			   if ($('input[name=quality_image_package_after_detail]:checked', '#form_radio_package').val()=="option4") {
+					   	  $("#div_image_package_other").css("display","block");
+					   }else{
+					   	  $("#div_image_package_other").css("display","none");
+					   }
+	       				
 	       			})
 
-	       			$('#check_quantity').click(function(){
-
-	       				$('#progressCheck').css("width","100%");
-	       			})
 
 	       			$('#form_radio input').on('change', function() {
+
 					   if ($('input[name=quality_product_after_detail]:checked', '#form_radio').val()=="option4") {
 					   	  $("#div_other").css("display","block");
 					   }else{
@@ -2777,51 +2756,82 @@ function getInventoryCheckList(){
 					});
 
 	       			$('#submit_check_stock').unbind('click').click(function(){
-	       				$.LoadingOverlay("show");
-	       				qtyDiff = parseInt(document.getElementById('quantity_product_after_detail').value) - qtyProduct
-	       				var selectedQuality = "";
-	       				if ($('input[name=quality_product_after_detail]:checked').val()=="option4") {
-	       					selectedQuality = document.getElementById('other_value_quality').value;
+	       				
+	       				if (document.getElementById('quantity_product_after_detail').value=="") {
+	       					
+	       					$('#error_qty').css('display','block');
+
 	       				}else{
-	       					selectedQuality = $('input[name=quality_product_after_detail]:checked').val();
+
+	       					$('#error_qty').css('display','none');
+
+	       					$.LoadingOverlay("show");
+
+		       				qtyDiff = parseInt(document.getElementById('quantity_product_after_detail').value) - qtyProduct
+		       				var selectedQuality = "";
+		       				var selectedComodity = "";
+		       				var selectedPackage = "";
+
+		       				if ($('input[name=quality_image_product_after_detail]:checked').val()=="option4") {
+		       					selectedComodity = document.getElementById('other_comodity_value_quality').value;
+		       				}else{
+		       					selectedComodity = $('input[name=quality_image_product_after_detail]:checked').val();
+		       				}
+
+		       				if ($('input[name=quality_image_package_after_detail]:checked').val()=="option4") {
+		       					selectedPackage = document.getElementById('other_package_value_quality').value;
+		       				}else{
+		       					selectedPackage = $('input[name=quality_image_package_after_detail]:checked').val();
+		       				}
+
+		       				if ($('input[name=quality_product_after_detail]:checked').val()=="option4") {
+		       					selectedQuality = document.getElementById('other_value_quality').value;
+		       				}else{
+		       					selectedQuality = $('input[name=quality_product_after_detail]:checked').val();
+		       				}
+
+		       				var dataSend = {
+
+		       					purchase_id : purchaseId,
+		       					id : id,
+		       					qty_diff : Math.abs(qtyDiff),
+		       					quality_note : "Catatan Kualitas : "+selectedQuality+" - Komoditas : "+selectedComodity+" - Kemasan : "+selectedPackage
+
+		       				}
+
+		       				console.log(dataSend);
+
+		       				$.ajax({
+							  type: "POST",
+							  url: "/update/inventory/check",
+							  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+							  // The key needs to match your method's input parameter (case-sensitive).
+							  data: JSON.stringify(dataSend),
+							  contentType: "application/json; charset=utf-8",
+							  dataType: "json",
+							  success: function(data){
+
+							  	console.log(data);
+							  	// window.location.href = "/inventory/check/vendor/stock?vendor_id="+vendorId+"&vendor_name="+vendorName;
+							  	location.reload();
+							  	$.LoadingOverlay("hide");
+
+							 },
+							  failure: function(errMsg) {
+							      alert(errMsg);
+							  }
+							});
 	       				}
-
-	       				var dataSend = {
-
-	       					purchase_id : purchaseId,
-	       					id : id,
-	       					qty_diff : Math.abs(qtyDiff),
-	       					quality_note : selectedQuality
-
-	       				}
-
-	       				console.log(dataSend);
-
-	       				$.ajax({
-						  type: "POST",
-						  url: "/update/inventory/check",
-						  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
-						  // The key needs to match your method's input parameter (case-sensitive).
-						  data: JSON.stringify(dataSend),
-						  contentType: "application/json; charset=utf-8",
-						  dataType: "json",
-						  success: function(data){
-
-						  	console.log(data);
-						  	location.reload();
-						  	$.LoadingOverlay("hide");
-
-
-						 },
-						  failure: function(errMsg) {
-						      alert(errMsg);
-						  }
-						});
+	       				
 
 
 	       			})
 
 	       		})
+
+				$('#checkStockModal').on('hidden.bs.modal', function () {
+				    $('#smartwizard').smartWizard("reset");
+				})
 
 		 },
 		  failure: function(errMsg) {
@@ -2830,6 +2840,41 @@ function getInventoryCheckList(){
 		});
 
 	}, 100);
+}
+
+
+function smartStepWizard(){
+
+	// Step show event
+        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+           //alert("You are on step "+stepNumber+" now");
+           if(stepPosition === 'first'){
+               $("#prev-btn").addClass('disabled');
+           }else if(stepPosition === 'final'){
+               $("#next-btn").addClass('disabled');
+           }else{
+               $("#prev-btn").removeClass('disabled');
+               $("#next-btn").removeClass('disabled');
+           }
+        });
+
+        // Toolbar extra buttons
+        var btnFinish = $('<button></button>').text('Finish')
+                                         .addClass('btn btn-info')
+                                         .on('click', function(){ alert('Finish Clicked'); });
+        var btnCancel = $('<button></button>').text('Cancel')
+                                         .addClass('btn btn-danger')
+                                         .on('click', function(){ $('#smartwizard').smartWizard("reset"); });
+
+        // Smart Wizard 1
+        $('#smartwizard').smartWizard({
+                selected: 0,
+                theme: 'arrows',
+                transitionEffect:'fade',
+                showStepURLhash: false,
+                toolbarSettings: {toolbarPosition: 'bottom',toolbarButtonPosition: 'end'
+                                }
+        });
 }
 
 

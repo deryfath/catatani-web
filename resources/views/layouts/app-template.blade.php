@@ -35,6 +35,13 @@
     <link rel="stylesheet" href="{{ asset('datatables-plugins/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('datatables-responsive/dataTables.responsive.css') }}">
     
+    <!-- Include SmartWizard CSS -->
+    <link href="{{ asset ("/bower_components/AdminLTE/dist/css/smart_wizard.css")}}" rel="stylesheet" type="text/css" />
+
+    <!-- Optional SmartWizard theme -->
+    <link href="{{ asset ("/bower_components/AdminLTE/dist/css/smart_wizard_theme_circles.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset ("/bower_components/AdminLTE/dist/css/smart_wizard_theme_arrows.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset ("/bower_components/AdminLTE/dist/css/smart_wizard_theme_dots.css")}}" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
     <script>
@@ -127,6 +134,9 @@
 
     <script src="{{ asset("js/highcharts.js") }}" type="text/javascript"></script>
     <script src="{{ asset("js/odoo.js") }}" type="text/javascript"></script>
+
+    <!-- Include SmartWizard JavaScript source -->
+    <script type="text/javascript" src="{{ asset ("/bower_components/AdminLTE/dist/js/jquery.smartWizard.min.js")}}"></script>
 
     <!-- overlay loading -->
     <script src="{{ asset("js/loadingoverlay.min.js") }}" type="text/javascript"></script>
