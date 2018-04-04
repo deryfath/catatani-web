@@ -241,7 +241,7 @@ function getProductList(){
                                                     
                                                 	'<label class="btn btn-default product-label" id="product_label_'+result.data[i].id+'" style="padding: 0;">'+
                                               		   
-                                              		   '<div id="panel_action_comodity"style="position: absolute;color:wheat;font-size: 15px;background: rgb(56, 86, 107);width:100%;"><i style="margin-right:80px;" class="glyphicon glyphicon-edit edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'"></i><i class="glyphicon glyphicon-trash delete-product" data-id="'+result.data[i].id+'"></i></div>'+
+                                              		   '<div id="panel_action_comodity"style="position: absolute;color:wheat;font-size: 15px;background: rgb(56, 86, 107);width:100%;"><i style="margin-right:80px;" class="glyphicon glyphicon-edit edit-product" data-id="'+result.data[i].id+'" data-imagemedium="'+result.data[i].image_medium+'" data-image="'+result.data[i].image+'" data-name="'+result.data[i].name+'" data-category="'+result.data[i].x_kategori_produk+'" data-type="'+result.data[i].x_tipe_produk+'"></i><i class="glyphicon glyphicon-trash delete-product" data-id="'+result.data[i].id+'"></i></div>'+
                                                          
                                                        '<img style="width: 100%;" src="data:image/jpeg;base64,'+result.data[i].image_medium+'">'+
                                              			 '<div class="bizcontent">'+
@@ -288,10 +288,11 @@ function getProductList(){
 				var id = $(this).data('id');
 				var name = $(this).data('name');
 				var category = $(this).data('category');
+				var type = $(this).data('type');
 				var imageMedium = $(this).data('imagemedium');
 				var image = $(this).data('image');
 
-				console.log(category);
+				console.log(type);
 
 				if(category != "cherry" && category != "green beans"){
 					console.log('test');
@@ -303,6 +304,19 @@ function getProductList(){
 					$('#other_category_update').css('display','none');  
 					document.getElementById("other_category_update").value = "";
 					$('#product_category_update').val(category);
+				}
+
+				if(type != "jagung" && type != "kopi" && type != "sayuran"){
+					console.log('test');
+					$('#product_type_update').val('lainnya');
+					$('#other_type_update').css('display','block');  
+					document.getElementById("other_type_update").value = type;
+
+				}else{
+
+					$('#other_type_update').css('display','none');  
+					document.getElementById("other_type_update").value = "";
+					$('#product_type_update').val(type);
 				}
 
 				document.getElementById("product_name").value = name;
@@ -360,16 +374,22 @@ function getProductList(){
  				// console.log($(this).data('image'));
 
  				var category = $('#product_category_update').val();
+ 				var type = $('#product_type_update').val();
 
  				if(category != "cherry" && category != "green beans"){
  					category = document.getElementById("other_category_update").value;
+ 				}
+
+ 				if(type != "jagung" && type != "kopi" && type!= "sayuran"){
+ 					type = document.getElementById("other_type_update").value;
  				}
 
  				var dataSend = {
 			         id : $(this).data('id'),
 			         name : document.getElementById("product_name").value,
 			         category : category,
-			         image : $(this).data('image')
+			         image : $(this).data('image'),
+			         type : type
 			      }
 
 			      console.log(dataSend);
@@ -459,6 +479,16 @@ function getProductList(){
         } 
     });
 
+ $('#product_type_update').change(function() {
+        var selectedValue = $(this).val();
+
+        if(selectedValue  === 'lainnya') {
+            $('#other_type_update').css('display','block');    
+        }else{
+        	$('#other_type_update').css('display','none');
+        } 
+    });
+
  $('#product_category_create').change(function() {
         var selectedValue = $(this).val();
 
@@ -466,6 +496,16 @@ function getProductList(){
             $('#other_category').css('display','block');    
         }else{
         	$('#other_category').css('display','none');
+        } 
+    });
+
+ $('#product_type_create').change(function() {
+        var selectedValue = $(this).val();
+
+        if(selectedValue  === 'lainnya') {
+            $('#other_type').css('display','block');    
+        }else{
+        	$('#other_type').css('display','none');
         } 
     });
 

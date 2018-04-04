@@ -86,6 +86,16 @@
                  <form enctype="multipart/form-data" action="{{route('productModel.store')}}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
+                        <label for="product_type_create">Tipe</label>
+                        <select id="product_type_create" name="product_type" class="form-control">
+                            <option value="jagung">Jagung</option>
+                            <option value="kopi">Kopi</option>
+                            <option value="sayuran">Sayuran</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                        <input type="text" name="other_type" style="display:none;margin-top:10px;" class="form-control" id="other_type">
+                    </div>
+                    <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="product_name" class="form-control" required>
                     </div>
@@ -130,6 +140,17 @@
 
                  <form enctype="multipart/form-data" action="">
                     {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="product_type_update">Tipe</label>
+                        <select id="product_type_update" class="form-control">
+                            <option value="jagung">Jagung</option>
+                            <option value="kopi">Kopi</option>
+                            <option value="sayuran">Sayuran</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                        <input type="text" id="other_type_update" style="display:none;margin-top:10px;" class="form-control" >
+                   
+                    </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="product_name" name="product_name" class="form-control">

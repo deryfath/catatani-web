@@ -86,6 +86,13 @@ class ProductController extends Controller
         }else{
         	$kategori = $other;
         }
+
+        $otherType = $request->input('other_type');
+        if($otherType=="" || $otherType==null){
+            $type = $request->input('product_type');
+        }else{
+            $type = $otherType;
+        }
         
 
         $image = $request->file('product_image');
@@ -96,7 +103,7 @@ class ProductController extends Controller
 
         //save to product template
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $productId = $models->execute_kw($this->db, $this->uid, $this->password,'product.template', 'create',array(array('name'=>$name,'type'=>'product','available_in_pos'=>false ,'image'=>$imdata,'x_kategori_produk'=>$kategori)));
+        $productId = $models->execute_kw($this->db, $this->uid, $this->password,'product.template', 'create',array(array('name'=>$name,'type'=>'product','available_in_pos'=>false ,'image'=>$imdata,'x_kategori_produk'=>$kategori, 'x_tipe_produk'=>$type)));
 
         $logger->info('Product ID '.$productId);
 
@@ -125,12 +132,13 @@ class ProductController extends Controller
         $id = $request->input('id');
         $name = $request->input('name');
         $category = $request->input('category');
+        $type = $request->input('type');
         $image = $request->input('image');
 
-        $logger->info('Image '. $image);
+        $logger->info('type '. $type);
 
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $response = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'write',array(array($id), array('name'=>$name,'image'=>$image,'x_kategori_produk'=>$category)));
+        $response = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'write',array(array($id), array('name'=>$name,'image'=>$image,'x_kategori_produk'=>$category,'x_tipe_produk'=>$type)));
         // $response2 = $models->execute_kw($this->db, $this->uid, $this->password, 'product.template', 'name_get',array(array($id)));
 
         $request->session()->flash('status', 'Product Berhasil di update!');

@@ -164,7 +164,7 @@ class OdooController extends Controller {
         $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
 
         $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $product = $models->execute_kw($this->db, $this->uid, $this->password,'product.product', 'search_read',array(),array('fields'=>array('name', 'seller_ids','qty_available','image_medium','image','type','x_kategori_produk')));
+        $product = $models->execute_kw($this->db, $this->uid, $this->password,'product.product', 'search_read',array(),array('fields'=>array('name', 'seller_ids','qty_available','image_medium','image','type','x_kategori_produk','x_tipe_produk')));
         
         $vendorArr = array();
         for ($i=0; $i < count($product); $i++) {
