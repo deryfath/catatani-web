@@ -368,21 +368,5 @@ class InventoryController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function getAgent()
-    {
-
-        $logger = new Logger('get_agent');
-        // Now add some handlers
-        $logger->pushHandler(new StreamHandler(__DIR__.'/my_app.log', Logger::DEBUG));
-
-        $models = RipcordBase::client($this->url."/xmlrpc/2/object");
-        $agent = $models->execute_kw($this->db, $this->uid, $this->password,'x_agent', 'search_read',array(),array());
-        
-        return response()->json(array('data'=> $agent), 200);
-    }
+    
 }

@@ -114,7 +114,7 @@
                 <div id="smartwizard">
                   <ul>
                       <li><a href="#step-1">Step 1<br /><small>Cek Komoditas</small></a></li>
-                      <li><a href="#step-2">Step 2<br /><small>Cek Kemasan</small></a></li>
+                      <li><a href="#step-2">Step 2<br /><small>Cek Pembayaran</small></a></li>
                       <li><a href="#step-3">Final Step<br /><small>Timbang</small></a></li>
                   </ul>
 
@@ -149,7 +149,7 @@
                       <div id="step-2" class="">
                           <img id="image_package_detail" alt="" style="width: 100%;margin-top: 12px;">
                           <div class="form-group" id="form_radio_package">
-                            <label for="exampleInputEmail1">Kualitas Kemasan</label>
+                            <label for="exampleInputEmail1">Memo Pembayaran Produk</label>
                             <div class="radio">
                               <label>
                                 <input type="radio" name="quality_image_package_after_detail" id="optionsRadios1" value="Sesuai" checked="">

@@ -319,7 +319,7 @@ class PurchaseController extends Controller
                 $dataDetail[0]['action'] = 'Stok barang telah Dicek';
 
             }else{
-                $dataDetail[0]['action'] = '<button style="margin-right:10px;" data-purchaseid="'.$data[0]['id'].'" data-id="'.$dataDetail[0]['id'].'" data-rating="'.$dataDetail[0]['x_quality_product'].'" data-packageimage="'.$dataDetail[0]['x_image_package'].'" data-productimage="'.$dataDetail[0]['x_image_product'].'" data-productname="'.$dataDetail[0]['product_id'][1].'" data-qty="'.$dataDetail[0]['product_qty'].'" class="btn btn-xs btn-primary edit-purchase-detail"><i class="glyphicon glyphicon-edit"></i> Cek Komoditas</button>';
+                $dataDetail[0]['action'] = '<button style="margin-right:10px;" data-purchaseid="'.$data[0]['id'].'" data-id="'.$dataDetail[0]['id'].'" data-rating="'.$dataDetail[0]['x_quality_product'].'" data-memoimage="'.$data[0]['x_image_memo'].'" data-packageimage="'.$dataDetail[0]['x_image_package'].'" data-productimage="'.$dataDetail[0]['x_image_product'].'" data-productname="'.$dataDetail[0]['product_id'][1].'" data-qty="'.$dataDetail[0]['product_qty'].'" class="btn btn-xs btn-primary edit-purchase-detail"><i class="glyphicon glyphicon-edit"></i> Cek Komoditas</button>';
 
             }
             

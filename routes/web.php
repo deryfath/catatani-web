@@ -60,6 +60,22 @@ Route::get('/get/weather','OdooController@getWeather');
 Route::get('/get/dashboard/count', 'DashboardController@getDashboardCount');
 
 
+//AGENT
+Route::get('/agents', function () {
+    return view('admin.agent');
+})->middleware('auth');
+
+Route::resource('agent', 'AgentController');
+
+Route::get('/get/agent', 'AgentController@getAgent');
+
+Route::get('/get/agent/index','AgentController@index');
+
+Route::post('/update/agent', 'AgentController@updateAgent');
+
+Route::post('/delete/agent', 'AgentController@deleteAgent');
+
+
 //VENDOR
 Route::resource('vendor', 'VendorController');
 
@@ -153,8 +169,6 @@ Route::get('/inventory/check/stock/list', function () {
 Route::post('/inventory/comodity/item', 'InventoryController@dataProductByItem');
 
 Route::get('/get/inventory/comodity/item', 'InventoryController@getDataProductByItem');
-
-Route::get('/get/agent', 'InventoryController@getAgent');
 
 Route::post('/inventory/process/item', 'InventoryController@dataVendorProductByItem');
 

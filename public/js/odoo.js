@@ -92,6 +92,10 @@ if(window.location.pathname== "/" ){
 }else if(window.location.pathname == "/inventory/check/vendor/stock"){
 
 	getInventoryVendorCheckList();
+
+}else if(window.location.pathname == "/agents"){
+
+	getAgent();
 }
 
 
@@ -2742,6 +2746,7 @@ function getInventoryCheckList(){
 	       			var ratingProduct = $(this).data('rating');
 	       			var imageProduct = $(this).data('productimage');
 	       			var imagePackage = $(this).data('packageimage');
+	       			var imageMemo = $(this).data('memoimage');
 	       			var qtyProduct = $(this).data('qty');
 
 	       			$('#product_title_detail').text(nameProduct);
@@ -2759,8 +2764,8 @@ function getInventoryCheckList(){
 	       				document.getElementById('image_product_detail').src= "http://placehold.it/200x200";
 	       			}
 
-	       			if (imagePackage!=false) {
-	       				document.getElementById('image_package_detail').src= imagePackage;
+	       			if (imageMemo!=false) {
+	       				document.getElementById('image_package_detail').src= imageMemo;
 	       			}else{
 	       				document.getElementById('image_package_detail').src= "http://placehold.it/200x200";
 	       			}
@@ -2916,6 +2921,144 @@ function smartStepWizard(){
                                 }
         });
 }
+
+////////////////////////////////////////////////////AGENT///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function getAgent(){
+
+	//hide alert message
+	$("#success-alert-agent").fadeTo(2000, 500).slideUp(500, function(){
+	               
+	   	$("#success-alert-agent").slideUp(500);
+	}); 
+
+	$(document).ready(function() {
+	    $('#dataTables-agent').DataTable({
+	        responsive : true,
+	        ajax : {
+	            "url" : "/get/agent/index"
+	        },
+	        columns : [ {
+	            "data" : "id"
+	        }, {
+	        	"data" : "x_name"
+	        }, {
+	            "data" : "x_username"
+	        }, {
+	        	"data" : "action", "orderable": false, "searchable": false
+	        }]
+	    });
+
+
+	});
+
+	$('#dataTables-agent').on('click', '.edit-agent', function(){
+
+		$('#updateAgentModal').modal();
+		var id = $(this).data('id');
+		var name = $(this).data('name');
+		var username = $(this).data('username');
+		var password = $(this).data('password');
+
+		document.getElementById('update_agent_name').value = name;
+		document.getElementById('update_agent_username').value = username;
+		document.getElementById('update_agent_password').value = password;
+		
+		$('#updateAgent').click(function(){
+			$.LoadingOverlay("show");
+			$('#updateAgentModal').modal('hide');
+			var dataSend = {
+
+				id : id,
+				name : document.getElementById('update_agent_name').value,
+				username : document.getElementById('update_agent_username').value,
+				password : document.getElementById('update_agent_password').value
+			}
+
+			console.log(dataSend);
+
+			$.ajax({
+			  type: "POST",
+			  url: "/update/agent",
+			  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+			  // The key needs to match your method's input parameter (case-sensitive).
+			  data: JSON.stringify(dataSend),
+			  contentType: "application/json; charset=utf-8",
+			  dataType: "json",
+			  success: function(data){
+
+			  	console.log(data);
+			  	location.reload();
+			  	$.LoadingOverlay("hide");
+
+			 },
+			  failure: function(errMsg) {
+			      alert(errMsg);
+			  }
+			});
+
+		})
+
+	})
+
+	$('#dataTables-agent').on('click', '.delete-agent', function(){
+
+		$.LoadingOverlay("show");
+
+		var dataSend = {
+
+			id : $(this).data('id')
+		}
+
+		$.ajax({
+			  type: "POST",
+			  url: "/delete/agent",
+			  headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') },
+			  // The key needs to match your method's input parameter (case-sensitive).
+			  data: JSON.stringify(dataSend),
+			  contentType: "application/json; charset=utf-8",
+			  dataType: "json",
+			  success: function(data){
+
+			  	console.log(data);
+			  	location.reload();
+			  	$.LoadingOverlay("hide");
+
+			 },
+			  failure: function(errMsg) {
+			      alert(errMsg);
+			  }
+			});
+
+	})
+
+
+	$.ajax({
+       type:'GET',
+       url:'/get/agent/index',
+       // async: true,
+       success:function(data){ 		
+
+ 			//get vendor
+       		console.log(data);
+       }
+    })
+
+
+}
+
+function showPasswordAgent(){
+	var x = document.getElementById("update_agent_password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+
 
 
 //////////////////////////////////////////////////////DASHBOARD/////////////////////////////////////////////////////////////////////////////////////////////////////////////

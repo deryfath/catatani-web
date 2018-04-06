@@ -51,6 +51,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('product') }}"><i class="fa fa-cubes fa-fw"></i>Komoditas</a></li>
             <li><a href="{{ url('vendors') }}"><i class="fa fa-group fa-fw"></i>Petani</a></li>
+            <li><a href="{{ url('agents') }}"><i class="fa fa-group fa-fw"></i>Pembeli</a></li>
           </ul>
         </li>
         <!-- <li><a href="{{ route('user-management.index') }}"><i class="fa fa-link"></i> <span>User management</span></a></li> -->
