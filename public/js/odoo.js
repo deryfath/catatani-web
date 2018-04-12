@@ -2565,16 +2565,25 @@ function checkInventoryStock(){
        		var result = data;
        		var vendorListSelect = document.getElementById('vendor_purchase_inventory');
 
-       		$('#vendor_purchase_inventory').val(result.data[0].id);
+       		if (result.data.length>0) {
 
-       		console.log(result.data[0].id);
+       			$('#vendor_purchase_inventory').val(result.data[0].id);
 
-       		for (var i = 0; i<result.data.length; i++){
-			    var opt = document.createElement('option');
-			    opt.value = result.data[i].id;
-			    opt.innerHTML = result.data[i].x_name;
-			    vendorListSelect.appendChild(opt);
-			}
+	       		console.log(result.data[0].id);
+
+	       		for (var i = 0; i<result.data.length; i++){
+				    var opt = document.createElement('option');
+				    opt.value = result.data[i].id;
+				    opt.innerHTML = result.data[i].x_name;
+				    vendorListSelect.appendChild(opt);
+				}
+
+       		}else{
+       			var opt = document.createElement('option');
+				opt.innerHTML = "-- Belum Ada Data Pembeli --";
+				vendorListSelect.appendChild(opt);
+       		}
+       		
 		}
 	})
 
